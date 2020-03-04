@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Toolbar from '@@/nav/toolbar/Toolbar'
+import Toolbar from '@@/nav/Toolbar'
 
 export default {
     name: 'App',
