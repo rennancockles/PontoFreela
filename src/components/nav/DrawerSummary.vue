@@ -31,13 +31,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
     name: 'DrawerSummary',
-    data () {
-        return {
-            time: '30:00',
-            money: 600.50
-        }
+    computed: {
+        ...mapGetters(['time', 'money'])
     }
 }
 </script>
