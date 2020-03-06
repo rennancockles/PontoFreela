@@ -1,0 +1,10 @@
+{
+    "execMap": {
+      "js": "sucrase-node"
+    },
+    "watch": [
+      "src/**/*.js",
+      "src/**/*.graphql"
+    ],
+    "ext": "js,json,graphql"
+  }
