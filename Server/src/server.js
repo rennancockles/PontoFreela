@@ -1,11 +1,12 @@
 import { GraphQLServer } from 'graphql-yoga'
-import path from 'path'
 import 'dotenv/config'
-import resolvers from './GraphQL/resolvers'
+import glue from 'schemaglue'
+
+const { schema, resolver } = glue('src/GraphQL')
 
 const server = new GraphQLServer({ 
-    typeDefs: path.resolve(__dirname, 'GraphQL', 'schema.graphql'),
-    resolvers
+    typeDefs: schema,
+    resolvers: resolver
 })
 
 server.start(({ port }) => {

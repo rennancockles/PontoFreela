@@ -1,0 +1,6 @@
+type Account {
+    id: ID!
+    name: String!
+    hourlyRate: Float!
+    active: Boolean!
+}

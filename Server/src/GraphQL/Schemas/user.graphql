@@ -10,7 +10,6 @@ type Mutation {
     createUser(name: String!, lastname: String, email: String!): User
 }
 
-# Schema Types
 type User {
     id: ID!
     name: String!
@@ -19,11 +18,4 @@ type User {
     email: String!
     password: String!
     accounts: [Account!]
-}
-
-type Account {
-    id: ID!
-    name: String!
-    hourlyRate: Float!
-    active: Boolean!
 }
