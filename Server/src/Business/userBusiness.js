@@ -13,7 +13,7 @@ export default {
         return users
     },
 
-    findById: async (_, { id }) => {
+    findById: async (id) => {
         const user = await userDAO.findById(id)
         if (user) user.accounts = await accountDAO.listByUserId(id)
 

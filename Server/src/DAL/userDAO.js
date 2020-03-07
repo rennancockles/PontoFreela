@@ -44,12 +44,12 @@ export default {
         })
     },
     
-    findByLogin: (email, password) => {
+    findByEmail: (email) => {
         return new Promise((resolve, reject) => {
             pool.getConnection((err, connection) => {
                 if (err) throw err;
             
-                const query = mysql.format('SELECT * FROM users WHERE email = ? AND password = ?;', [email, password])
+                const query = mysql.format('SELECT * FROM users WHERE email = ?;', [email])
                 
                 connection.query(query, (err, result) => {
                     if (err) throw err

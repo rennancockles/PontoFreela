@@ -5,7 +5,7 @@ export const resolver = {
         users: () => {
             return userBusiness.list()
         },
-        user: (_, { id }) => {
+        user: (_, { id }, { userId }) => {
             return userBusiness.findById(id)
         }
     },

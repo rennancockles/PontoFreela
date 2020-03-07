@@ -1,3 +1,8 @@
 type Query {
-    login(email: String!, password: String!): User
+    login(email: String!, password: String!): AuthResponse
+}
+
+type AuthResponse {
+    user: User!
+    token: String!
 }
