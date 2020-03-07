@@ -12,7 +12,7 @@ const http = axios.create({
 
 const request = {
     success: req => {
-        if (Auth.isLoggedIn()) req.headers.Authorization = `Bearer ${Auth.getItem('accessToken')}`
+        if (Auth.isLoggedIn()) req.headers.Authorization = `Bearer ${Auth.getItem('authToken')}`
         return req
     },
     error: error => {
