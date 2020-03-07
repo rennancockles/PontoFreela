@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import BeforeRouter from './BeforeRouter.js'
 
 import authRoutes from './auth'
+import configRoutes from './config'
 
 Vue.use(VueRouter)
 
@@ -24,7 +25,8 @@ const routes = [
     //         auth: true
     //     }
     // },
-    ...authRoutes
+    ...authRoutes,
+    ...configRoutes
 ]
 
 const router = new VueRouter({
