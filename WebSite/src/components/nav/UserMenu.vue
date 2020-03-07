@@ -16,7 +16,7 @@
                 <v-list-item-action><v-icon>mdi-cogs</v-icon></v-list-item-action>
                 <v-list-item-content><v-list-item-title><span>Configuração</span></v-list-item-title></v-list-item-content>
             </v-list-item>
-            <v-list-item key="logout" router to="/">
+            <v-list-item key="logout" router :to="{ name: 'auth.logout' }">
                 <v-list-item-action><v-icon>mdi-exit-to-app</v-icon></v-list-item-action>
                 <v-list-item-content><v-list-item-title><span>Sair</span></v-list-item-title></v-list-item-content>
             </v-list-item>
