@@ -7,6 +7,8 @@ export const resolver = {
         }
     },
     Mutation: {
-        createUser: () => {}
+        updateUser: (_, { user }, { userId }) => {
+            return userBusiness.update(user, userId)
+        }
     }
 }

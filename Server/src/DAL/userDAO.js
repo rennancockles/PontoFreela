@@ -64,5 +64,33 @@ export default {
                 })
             })
         })
+    },
+    
+    update: (user) => {
+        return new Promise((resolve, reject) => {
+            pool.getConnection((err, connection) => {
+                if (err) throw err;
+
+                const query = mysql.format('UPDATE users SET name = ?, lastname = ?, email = ?, birth = ? WHERE id = ?;', [
+                    user.name,
+                    user.lastname,
+                    user.email,
+                    user.birth,
+                    user.id
+                ])
+
+                connection.query(query, (err, result) => {
+                    if (err) throw err
+
+                    if (result) {
+                        resolve(result.affectedRows > 0)
+                    } else {
+                        reject(new Error("Error updating user!"))
+                    }
+
+                    connection.release();
+                })
+            })
+        })
     }
 }
