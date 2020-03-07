@@ -1,9 +1,7 @@
 scalar Date
 
 type Query {
-    users: [User!]!
-    user(id: Int): User
-    accounts: [Account!]!
+    user(id: Int): UserResponse
 }
 
 type Mutation {
@@ -18,4 +16,9 @@ type User {
     email: String!
     password: String!
     accounts: [Account!]
+}
+
+type UserResponse {
+    user: User!
+    accounts: [Account]
 }

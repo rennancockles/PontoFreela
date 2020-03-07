@@ -9,11 +9,11 @@ export default {
 
         if (!user || !await bcrypt.compare(password, user.password)) return null
 
-        user.accounts = await accountDAO.listByUserId(user.id)
+        const accounts = await accountDAO.listByUserId(user.id)
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
             expiresIn: '3h'
         })
 
-        return { user, token }
+        return { token, user, accounts }
     }
 }

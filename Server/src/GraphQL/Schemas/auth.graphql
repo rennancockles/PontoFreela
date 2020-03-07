@@ -4,5 +4,6 @@ type Query {
 
 type AuthResponse {
     user: User!
+    accounts: [Account]
     token: String!
 }
