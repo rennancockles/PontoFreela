@@ -5,6 +5,7 @@ export default {
         user: authRequired
     },
     Mutation: {
-        updateUser: authRequired
+        updateUser: authRequired,
+        updateAccount: authRequired
     }
 }

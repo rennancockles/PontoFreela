@@ -1,5 +1,16 @@
+type Mutation {
+    updateAccount(account: AccountInput!): Account
+}
+
 type Account {
     id: ID!
+    name: String!
+    hourlyRate: Float!
+    active: Boolean!
+}
+
+input AccountInput {
+    id: ID
     name: String!
     hourlyRate: Float!
     active: Boolean!
