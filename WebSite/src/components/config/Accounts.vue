@@ -41,6 +41,7 @@
 
                     <v-card-actions>
                         <v-spacer />
+                        <v-btn v-if="!onlyOneAccount" color="danger" @click="onDelete(account)" dark>Remover</v-btn>
                         <v-btn color="primary" @click="onSubmit(account)" :disabled="!frmValid">Salvar</v-btn>
                     </v-card-actions>
                 </v-card>
@@ -72,7 +73,10 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['accounts'])
+        ...mapGetters(['accounts']),
+        onlyOneAccount () {
+            return this.payload.filter(account => account.id).length === 1
+        }
     },
     created () {
         this.payload = this.accounts.map(acc => ({ ...acc, originalName: acc.name }))
@@ -97,10 +101,29 @@ export default {
                 })
                 .catch(this.$throwException)
         },
+        onDelete (account) {
+            if (account.id) {
+                this.deleteFromServer(account)
+            } else {
+                this.deleteFromMemory(account)
+            }
+        },
+        deleteFromMemory (account) {
+            this.payload = this.payload.filter(acc => acc.originalName !== account.originalName)
+            this.tab = 0
+        },
+        deleteFromServer (account) {
+            console.log('Delete from server')
+            console.log(account)
+        },
         addAccount () {
+            const qtdNewAccount = this.payload.filter(account => account.originalName.includes('Nova Conta')).length
+            const suffix = qtdNewAccount === 0 ? '' : ` ${qtdNewAccount}`
+            const newAccountName = `Nova Conta${suffix}`
+
             this.payload.push({
-                originalName: 'Nova Conta',
-                name: 'Nova Conta',
+                originalName: newAccountName,
+                name: newAccountName,
                 active: false,
                 hourlyRate: '0.00'
             })
