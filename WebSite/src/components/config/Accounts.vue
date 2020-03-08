@@ -1,13 +1,18 @@
 <template>
     <v-card flat>
-        <v-tabs background-color="default">
+        <v-tabs background-color="default" v-model="tab">
             <v-tab
             v-for="account in payload"
             :key="account.originalName"
             >
                 {{ account.originalName }}
             </v-tab>
+            <v-tab @click.stop.capture="addAccount">
+                <v-icon large color="primary">mdi-plus</v-icon>
+            </v-tab>
+        </v-tabs>
 
+        <v-tabs-items v-model="tab">
             <v-tab-item
             v-for="account in payload"
             :key="account.originalName"
@@ -40,7 +45,10 @@
                     </v-card-actions>
                 </v-card>
             </v-tab-item>
-        </v-tabs>
+
+            <v-tab-item>
+            </v-tab-item>
+        </v-tabs-items>
     </v-card>
 </template>
 
@@ -52,6 +60,7 @@ export default {
     name: 'Accounts',
     data () {
         return {
+            tab: null,
             frmValid: true,
             payload: [],
             money: {
@@ -87,6 +96,16 @@ export default {
                     this.$goHome()
                 })
                 .catch(this.$throwException)
+        },
+        addAccount () {
+            this.payload.push({
+                originalName: 'Nova Conta',
+                name: 'Nova Conta',
+                active: false,
+                hourlyRate: '0.00'
+            })
+
+            this.tab = this.payload.length
         }
     }
 }
