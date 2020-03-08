@@ -32,6 +32,11 @@ export default {
             accounts.push(payload)
 
             this.commit('SET_ACCOUNTS', accounts)
+        },
+        REMOVE_ACCOUNT (store, payload) {
+            const accounts = store.accounts.filter(account => account.id !== payload.id)
+
+            this.commit('SET_ACCOUNTS', accounts)
         }
     },
     actions: {
@@ -43,6 +48,9 @@ export default {
         },
         updateAccount ({ commit }, payload) {
             commit('UPDATE_ACCOUNT', payload)
+        },
+        removeAccount ({ commit }, payload) {
+            commit('REMOVE_ACCOUNT', payload)
         }
     }
 }

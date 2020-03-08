@@ -22,5 +22,28 @@ export default {
                 }
             }
         })
+    },
+
+    delete: ({ id, active, name, hourlyRate }) => {
+        return $http.post('', {
+            query: `
+                mutation ($account: AccountInput!) {
+                    accounts: deleteAccount (account: $account) {
+                        id,
+                        active,
+                        name,
+                        hourlyRate
+                    }
+                }
+            `,
+            variables: {
+                account: {
+                    id,
+                    active,
+                    name,
+                    hourlyRate
+                }
+            }
+        })
     }
 }

@@ -82,7 +82,7 @@ export default {
         this.payload = this.accounts.map(acc => ({ ...acc, originalName: acc.name }))
     },
     methods: {
-        ...mapActions(['updateAccount']),
+        ...mapActions(['updateAccount', 'setAccounts']),
         onSubmit (account) {
             this.setLoading(true)
             account.hourlyRate = parseFloat(account.hourlyRate.replace('R$ ', '').replace('.', '').replace(',', '.'))
@@ -113,8 +113,22 @@ export default {
             this.tab = 0
         },
         deleteFromServer (account) {
-            console.log('Delete from server')
-            console.log(account)
+            this.setLoading(true)
+            account.hourlyRate = parseFloat(account.hourlyRate.replace('R$ ', '').replace('.', '').replace(',', '.'))
+
+            API.delete(account)
+                .then(({ data }) => {
+                    const accountsResponse = data.data.accounts
+
+                    if (accountsResponse && accountsResponse.length > 0) {
+                        this.setAccounts(accountsResponse)
+                        this.$auth.setItem('accounts', accountsResponse)
+                    }
+
+                    this.setLoading(false)
+                    this.$goHome()
+                })
+                .catch(this.$throwException)
         },
         addAccount () {
             const qtdNewAccount = this.payload.filter(account => account.originalName.includes('Nova Conta')).length
