@@ -45,5 +45,23 @@ export default {
                 }
             }
         })
+    },
+
+    setActive: ({ id }) => {
+        return $http.post('', {
+            query: `
+                mutation ($id: ID!) {
+                    account: setActive (id: $id) {
+                        id,
+                        active,
+                        name,
+                        hourlyRate
+                    }
+                }
+            `,
+            variables: {
+                id
+            }
+        })
     }
 }

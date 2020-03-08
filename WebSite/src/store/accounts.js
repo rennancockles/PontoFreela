@@ -19,8 +19,8 @@ export default {
             })
             store.accounts = payload
         },
-        SET_ACTIVE (store, accountName) {
-            const account = store.accounts.find(account => account.name === accountName)
+        SET_ACTIVE (store, payload) {
+            const account = store.accounts.find(account => account.id === payload.id)
 
             if (account) {
                 store.accounts.forEach(account => { account.active = false })
@@ -43,8 +43,8 @@ export default {
         setAccounts ({ commit }, payload) {
             commit('SET_ACCOUNTS', payload)
         },
-        setActive ({ commit }, accountName) {
-            commit('SET_ACTIVE', accountName)
+        changeActive ({ commit }, payload) {
+            commit('SET_ACTIVE', payload)
         },
         updateAccounts ({ commit }, payload) {
             commit('UPDATE_ACCOUNTS', payload)

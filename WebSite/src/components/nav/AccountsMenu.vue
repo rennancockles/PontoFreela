@@ -16,7 +16,7 @@
             <v-list-item
             v-for="account in accounts"
             :key="account.name"
-            @click="setActive(account.name)"
+            @click="setActive(account)"
             >
                 <v-list-item-icon>
                     <v-icon v-if="account.active" color="success">mdi-check-circle-outline</v-icon>
@@ -31,6 +31,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import API from '@/api/account'
 
 export default {
     name: 'AccountsMenu',
@@ -38,7 +39,25 @@ export default {
         ...mapGetters(['accounts', 'activeAccount'])
     },
     methods: {
-        ...mapActions(['setActive'])
+        ...mapActions(['changeActive']),
+        setActive (account) {
+            if (account.active) return
+
+            this.setLoading(true)
+
+            API.setActive(account)
+                .then(({ data }) => {
+                    const accountResponse = data.data.account
+
+                    if (accountResponse && accountResponse.id) {
+                        this.changeActive(accountResponse)
+                        this.$auth.setItem('accounts', this.accounts)
+                    }
+
+                    this.setLoading(false)
+                })
+                .catch(this.$throwException)
+        }
     }
 }
 </script>
