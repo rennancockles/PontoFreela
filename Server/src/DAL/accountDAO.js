@@ -71,5 +71,56 @@ export default {
                 })
             })
         })
+    },
+    
+    delete: (account, userId) => {
+        return new Promise((resolve, reject) => {
+            pool.getConnection((err, connection) => {
+                if (err) throw err;
+
+                const query = mysql.format('DELETE FROM accounts WHERE id = ? AND userId = ?;', [
+                    account.id,
+                    userId
+                ])
+
+                connection.query(query, (err, result) => {
+                    if (err) throw err
+
+                    if (result) {
+                        resolve(result.affectedRows > 0)
+                    } else {
+                        reject(new Error("Error deleting account!"))
+                    }
+
+                    connection.release();
+                })
+            })
+        })
+    },
+    
+    updateActive: (account, userId, activeValue) => {
+        return new Promise((resolve, reject) => {
+            pool.getConnection((err, connection) => {
+                if (err) throw err;
+
+                const query = mysql.format('UPDATE accounts SET active = ? WHERE id = ? AND userId = ?;', [
+                    activeValue,
+                    account.id,
+                    userId
+                ])
+
+                connection.query(query, (err, result) => {
+                    if (err) throw err
+
+                    if (result) {
+                        resolve(result.affectedRows > 0)
+                    } else {
+                        reject(new Error("Error updating account!"))
+                    }
+
+                    connection.release();
+                })
+            })
+        })
     }
 }

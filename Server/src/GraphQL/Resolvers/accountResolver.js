@@ -4,6 +4,9 @@ export const resolver = {
     Mutation: {
         updateAccount: (_, { account }, { userId }) => {
             return accountBusiness.update(account, userId)
+        },
+        deleteAccount: (_, { account }, { userId }) => {
+            return accountBusiness.delete(account, userId)
         }
     }
 }
