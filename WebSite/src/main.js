@@ -6,10 +6,13 @@ import router from './router'
 import store from './store'
 import auth from './auth'
 import vuetify from './plugins/vuetify'
+import money from 'v-money'
 import VueCurrencyFilter from 'vue-currency-filter'
 import './config'
 
 moment.locale('pt-BR')
+
+Vue.use(money)
 
 Vue.use(VueCurrencyFilter, {
     symbol: 'R$',
