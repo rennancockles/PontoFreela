@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <!-- <bounce-loader :loading="loading" :color="'#337ab7'" :size="'70px'"   ></bounce-loader> -->
+        <bounce-loader :loading="loading" :color="'#337ab7'" :size="'70px'"></bounce-loader>
 
         <template v-if="isLoggedIn && !isLogin">
             <toolbar></toolbar>
@@ -41,7 +41,7 @@ export default {
     //
     }),
     computed: {
-        ...mapGetters(['isLoggedIn']),
+        ...mapGetters(['isLoggedIn', 'loading']),
         currentYear () {
             return new Date().getFullYear()
         },
@@ -73,3 +73,19 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+.v-spinner {
+    position: fixed;
+    background-color: #000;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.5;
+    z-index: 9999;
+    .v-bounce {
+        margin: 20% auto;
+    }
+}
+</style>
