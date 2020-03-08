@@ -46,6 +46,33 @@ export default {
         })
     },
     
+    insert: (account, userId) => {
+        return new Promise((resolve, reject) => {
+            pool.getConnection((err, connection) => {
+                if (err) throw err;
+
+                const query = mysql.format('INSERT INTO accounts (name, hourlyRate, active, userId) VALUES (?, ?, ?, ?);', [
+                    account.name,
+                    account.hourlyRate,
+                    account.active,
+                    userId
+                ])
+
+                connection.query(query, (err, result) => {
+                    if (err) throw err
+
+                    if (result) {
+                        resolve(result.insertId)
+                    } else {
+                        reject(new Error("Error inserting account!"))
+                    }
+
+                    connection.release();
+                })
+            })
+        })
+    },
+    
     update: (account, userId) => {
         return new Promise((resolve, reject) => {
             pool.getConnection((err, connection) => {

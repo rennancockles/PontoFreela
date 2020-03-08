@@ -1,6 +1,27 @@
 import accountDAO from '../DAL/accountDAO'
 
 export default {
+    upsert: async (account, userId) => {
+        if (account.id) {
+            return exports.default.update(account, userId)
+        } else {
+            return exports.default.insert(account, userId)
+        }
+    },
+
+    insert: async (account, userId) => {
+        account.active = false
+
+        const id = await accountDAO.insert(account, userId)
+
+        if (id) {
+            account.id = id
+            return account
+        } else {
+            return null
+        }
+    },
+
     update: async (account, userId) => {
         const success = await accountDAO.update(account, userId)
         

@@ -2,8 +2,8 @@ import accountBusiness from '../../Business/accountBusiness';
 
 export const resolver = {
     Mutation: {
-        updateAccount: (_, { account }, { userId }) => {
-            return accountBusiness.update(account, userId)
+        upsertAccount: (_, { account }, { userId }) => {
+            return accountBusiness.upsert(account, userId)
         },
         deleteAccount: (_, { account }, { userId }) => {
             return accountBusiness.delete(account, userId)

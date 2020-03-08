@@ -1,5 +1,5 @@
 type Mutation {
-    updateAccount(account: AccountInput!): Account
+    upsertAccount(account: AccountInput!): Account
     deleteAccount(account: AccountInput!): [Account!]
 }
 
