@@ -1,11 +1,11 @@
 import $http from '@/config/http'
 
 export default {
-    update: ({ id, active, name, hourlyRate }) => {
+    upsert: ({ id, active, name, hourlyRate }) => {
         return $http.post('', {
             query: `
                 mutation ($account: AccountInput!) {
-                    account: updateAccount (account: $account) {
+                    account: upsertAccount (account: $account) {
                         id,
                         active,
                         name,

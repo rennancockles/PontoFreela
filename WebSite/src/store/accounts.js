@@ -27,7 +27,7 @@ export default {
                 account.active = true
             }
         },
-        UPDATE_ACCOUNT (store, payload) {
+        UPDATE_ACCOUNTS (store, payload) {
             const accounts = store.accounts.filter(account => account.id !== payload.id)
             accounts.push(payload)
 
@@ -46,8 +46,8 @@ export default {
         setActive ({ commit }, accountName) {
             commit('SET_ACTIVE', accountName)
         },
-        updateAccount ({ commit }, payload) {
-            commit('UPDATE_ACCOUNT', payload)
+        updateAccounts ({ commit }, payload) {
+            commit('UPDATE_ACCOUNTS', payload)
         },
         removeAccount ({ commit }, payload) {
             commit('REMOVE_ACCOUNT', payload)

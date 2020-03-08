@@ -82,17 +82,17 @@ export default {
         this.payload = this.accounts.map(acc => ({ ...acc, originalName: acc.name }))
     },
     methods: {
-        ...mapActions(['updateAccount', 'setAccounts']),
+        ...mapActions(['updateAccounts', 'setAccounts']),
         onSubmit (account) {
             this.setLoading(true)
             account.hourlyRate = parseFloat(account.hourlyRate.replace('R$ ', '').replace('.', '').replace(',', '.'))
 
-            API.update(account)
+            API.upsert(account)
                 .then(({ data }) => {
                     const accountResponse = data.data.account
 
                     if (accountResponse && accountResponse.id) {
-                        this.updateAccount(accountResponse)
+                        this.updateAccounts(accountResponse)
                         this.$auth.setItem('accounts', this.accounts)
                     }
 
@@ -125,8 +125,10 @@ export default {
                         this.$auth.setItem('accounts', accountsResponse)
                     }
 
+                    this.payload = accountsResponse.map(acc => ({ ...acc, originalName: acc.name }))
+                    this.tab = 0
+
                     this.setLoading(false)
-                    this.$goHome()
                 })
                 .catch(this.$throwException)
         },
