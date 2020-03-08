@@ -1,6 +1,7 @@
 type Mutation {
     upsertAccount(account: AccountInput!): Account
     deleteAccount(account: AccountInput!): [Account!]
+    setActive(id: ID!): Account
 }
 
 type Account {

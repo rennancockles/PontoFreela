@@ -7,6 +7,7 @@ export default {
     Mutation: {
         updateUser: authRequired,
         upsertAccount: authRequired,
-        deleteAccount: authRequired
+        deleteAccount: authRequired,
+        setActive: authRequired
     }
 }

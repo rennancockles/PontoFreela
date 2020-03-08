@@ -45,6 +45,28 @@ export default {
             })
         })
     },
+
+    getActive: (userId) => {
+        return new Promise((resolve, reject) => {
+            pool.getConnection((err, connection) => {
+                if (err) throw err;
+            
+                const query = mysql.format('SELECT * FROM accounts WHERE active = 1 AND userId = ?;', [userId])
+                
+                connection.query(query, (err, result) => {
+                    if (err) throw err
+
+                    if (result) {
+                        resolve(result[0])
+                    } else {
+                        reject(new Error("Error getting account!"))
+                    }
+
+                    connection.release();
+                })
+            })
+        })
+    },
     
     insert: (account, userId) => {
         return new Promise((resolve, reject) => {
@@ -125,14 +147,14 @@ export default {
         })
     },
     
-    updateActive: (account, userId, activeValue) => {
+    updateActive: (accountId, userId, activeValue) => {
         return new Promise((resolve, reject) => {
             pool.getConnection((err, connection) => {
                 if (err) throw err;
 
                 const query = mysql.format('UPDATE accounts SET active = ? WHERE id = ? AND userId = ?;', [
                     activeValue,
-                    account.id,
+                    accountId,
                     userId
                 ])
 

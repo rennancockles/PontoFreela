@@ -36,12 +36,21 @@ export default {
 
         if (account.active) {
             const newActiveAccount = userAccounts.find(acc => !acc.active)
-            accountDAO.updateActive(newActiveAccount, userId, true)
+            accountDAO.updateActive(newActiveAccount.id, userId, true)
         }
         
         const success = await accountDAO.delete(account, userId)
         
         if (success) return await accountDAO.listByUserId(userId)
         else return null
+    },
+
+    setActive: async (id, userId) => {
+        const activeAccount = await accountDAO.getActive(userId)
+
+        await accountDAO.updateActive(activeAccount.id, userId, false)
+        await accountDAO.updateActive(id, userId, true)
+
+        return await accountDAO.getActive(userId)
     }
 }

@@ -7,6 +7,9 @@ export const resolver = {
         },
         deleteAccount: (_, { account }, { userId }) => {
             return accountBusiness.delete(account, userId)
+        },
+        setActive: (_, { id }, { userId }) => {
+            return accountBusiness.setActive(id, userId)
         }
     }
 }
