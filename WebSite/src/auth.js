@@ -24,11 +24,12 @@ export default {
         const token = this.getToken()
         if (!token) return false
 
-        const decodedToken = jwt.verify(token, process.env.VUE_APP_JWT_SECRET)
+        try {
+            const decodedToken = jwt.verify(token, process.env.VUE_APP_JWT_SECRET)
 
-        if (decodedToken) {
-            return true
-        } else {
+            if (!decodedToken) return false
+            else return true
+        } catch {
             return false
         }
     },
