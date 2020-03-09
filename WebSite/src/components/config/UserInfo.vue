@@ -52,6 +52,13 @@
                             ></v-date-picker>
                         </v-menu>
                     </v-col>
+                    <v-col xs="12" sm="6" md="3">
+                        <v-text-field
+                        label="Empresa"
+                        v-model="payload.company"
+                        :rules="$rules.required"
+                        ></v-text-field>
+                    </v-col>
                 </v-row>
             </v-form>
         </v-card-text>
@@ -65,7 +72,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import API from '@/api/config'
+import API from '@/api/user'
 
 export default {
     name: 'UserInfo',
@@ -79,7 +86,8 @@ export default {
                 lastname: '',
                 email: '',
                 birth: '',
-                password: ''
+                password: '',
+                company: ''
             }
         }
     },

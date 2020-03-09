@@ -71,11 +71,12 @@ export default {
             pool.getConnection((err, connection) => {
                 if (err) throw err;
 
-                const query = mysql.format('UPDATE users SET name = ?, lastname = ?, email = ?, birth = ? WHERE id = ?;', [
+                const query = mysql.format('UPDATE users SET name = ?, lastname = ?, email = ?, birth = ?, company = ? WHERE id = ?;', [
                     user.name,
                     user.lastname,
                     user.email,
                     user.birth,
+                    user.company,
                     user.id
                 ])
 

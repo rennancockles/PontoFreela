@@ -1,7 +1,7 @@
 import $http from '@/config/http'
 
 export default {
-    updateUser: ({ name, lastname, email, birth }) => {
+    updateUser: ({ name, lastname, email, birth, company }) => {
         return $http.post('', {
             query: `
                 mutation ($user: UserInput!) {
@@ -11,6 +11,7 @@ export default {
                         lastname
                         email
                         birth
+                        company
                     }
                 }
             `,
@@ -19,7 +20,8 @@ export default {
                     name,
                     lastname,
                     email,
-                    birth
+                    birth,
+                    company
                 }
             }
         })

@@ -14,6 +14,7 @@ type User {
     lastname: String
     birth: Date!
     email: String!
+    company: String
 }
 
 input UserInput {
@@ -21,6 +22,7 @@ input UserInput {
     lastname: String!
     email: String!
     birth: Date!
+    company: String
 }
 
 type UserResponse {

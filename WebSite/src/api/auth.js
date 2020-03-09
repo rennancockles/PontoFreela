@@ -13,6 +13,7 @@ export default {
                             lastname
                             email
                             birth
+                            company
                         }
                         accounts {
                             id
