@@ -3,18 +3,17 @@ export default [
         key: 'Records',
         title: 'Registros',
         icon: 'mdi-format-list-bulleted',
-        to: '/',
         active: true,
         subitems: [
             {
                 key: 'Report',
                 title: 'Relatório',
-                to: '/'
+                to: { name: 'report.list' }
             },
             {
                 key: 'NewRecord',
                 title: 'Novo Registro',
-                to: '/'
+                to: { name: 'report.new' }
             }
         ]
     },

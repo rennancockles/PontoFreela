@@ -19,7 +19,7 @@
                 v-for="subItem in item.subitems"
                 :key="subItem.key"
                 router
-                :to="item.to"
+                :to="subItem.to"
                 >
                     <v-list-item-content>
                         <v-list-item-title v-text="subItem.title"></v-list-item-title>
