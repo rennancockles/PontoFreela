@@ -8,6 +8,10 @@ Vue.filter('toBRDate', function (value) {
     return value ? Vue.prototype.$moment(String(value)).format('DD/MM/YYYY') : ''
 })
 
+Vue.filter('toBRTime', function (value) {
+    return value ? Vue.prototype.$moment(String(value)).format('HH:mm') : ''
+})
+
 Vue.filter('toBRDateTime', function (value) {
     return value ? Vue.prototype.$moment(String(value)).format('DD/MM/YYYY HH:mm') : ''
 })
