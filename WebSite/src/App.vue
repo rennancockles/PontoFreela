@@ -63,8 +63,8 @@ export default {
         }
     },
     created () {
-        if (this.$auth.isLoggedIn()) {
-            this.setIsLoggedIn(true)
+        this.setIsLoggedIn(this.$auth.isLoggedIn())
+        if (this.isLoggedIn) {
             this.setUser(this.$auth.getUser())
             this.setAccounts(this.$auth.getAccounts())
         } else {
