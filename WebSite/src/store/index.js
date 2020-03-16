@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import accountsStore from './accounts.js'
 import authStore from './auth.js'
+import recordStore from './record.js'
 import summaryStore from './summary.js'
 import userStore from './user.js'
 
@@ -40,6 +41,7 @@ export default new Vuex.Store({
     modules: {
         accountsStore,
         authStore,
+        recordStore,
         summaryStore,
         userStore
     }
