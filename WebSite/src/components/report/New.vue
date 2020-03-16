@@ -70,6 +70,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import NewTime from './NewTime'
+import API from '@/api/report'
 
 export default {
     name: 'NewReport',
@@ -104,7 +105,18 @@ export default {
             this.addTime((new Date()).toLocaleTimeString().replace(/:\d\d$/, ''))
         },
         onSubmit () {
-            console.log(this.payload)
+            this.setLoading(true)
+
+            API.upsert(this.payload)
+                .then(({ data }) => {
+                    const reportResponse = data.data.report
+
+                    console.log(reportResponse)
+
+                    this.setLoading(false)
+                    this.$goHome()
+                })
+                .catch(this.$throwException)
         }
     }
 }
