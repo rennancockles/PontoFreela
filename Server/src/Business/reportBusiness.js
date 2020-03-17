@@ -1,3 +1,4 @@
+import moment from 'moment'
 import reportDAO from '../DAL/reportDAO'
 import recordDAO from '../DAL/recordDAO'
 
@@ -23,5 +24,29 @@ export default {
         }        
 
         return response
+    },
+
+    insert: async (reportInput) => {
+        const { accountId } = reportInput
+        const { records } = reportInput
+        const report = { date: reportInput.date, obs: reportInput.obs }
+        console.log(moment(records[0].time, 'HH:mm'))
+        console.log(moment(records[1].time, 'HH:mm'))
+        console.log(moment(records[0].time, 'HH:mm') < moment(records[1].time, 'HH:mm'))
+        
+        // const reportId = await reportDAO.insert(report, accountId)
+
+        // if (reportId && reportId > 0) {
+        //     report.id = reportId
+
+        //     for (let i = 0; i < records.length; i++) {
+        //         const recordId = await recordDAO.insert(records[i], reportId)
+        //         records[i].id = recordId
+        //     }
+
+        //     return { report, records }
+        // }       
+
+        return null
     }
 }
