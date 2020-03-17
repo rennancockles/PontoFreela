@@ -2,12 +2,15 @@ import authRequired from './auth'
 
 export default {
     Query: {
-        user: authRequired
+        user: authRequired,
+        report: authRequired,
+        reports: authRequired
     },
     Mutation: {
         updateUser: authRequired,
         upsertAccount: authRequired,
         deleteAccount: authRequired,
-        setActive: authRequired
+        setActive: authRequired,
+        insertReport: authRequired
     }
 }
