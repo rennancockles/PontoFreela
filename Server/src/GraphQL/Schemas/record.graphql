@@ -1,0 +1,8 @@
+type Record {
+    id: ID!
+    time: Time!
+}
+
+input RecordInput {
+    time: Time!
+}

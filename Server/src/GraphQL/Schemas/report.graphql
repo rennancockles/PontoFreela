@@ -1,0 +1,26 @@
+type Query {
+    report(id: ID): ReportResponse
+    reports(accountId: ID): [ReportResponse]
+}
+
+type Mutation {
+    insertReport(report: ReportInput!): ReportResponse
+}
+
+type Report {
+    id: ID!
+    date: Date!
+    obs: String
+}
+
+input ReportInput {
+    accountId: ID!
+    date: Date!
+    obs: String
+    records: [RecordInput!]!
+}
+
+type ReportResponse {
+    report: Report!
+    records: [Record]
+}
