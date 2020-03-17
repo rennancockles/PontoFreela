@@ -21,7 +21,7 @@ export default async (resolve, root, args, ctx, info) => {
         ctx.userId = decodedToken.id
 
         return await resolve(root, args, ctx, info)
-    } catch {
-        throw new Error('Not authorized')
+    } catch (e) {
+        throw e
     }
 }
