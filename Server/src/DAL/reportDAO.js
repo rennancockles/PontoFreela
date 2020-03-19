@@ -7,7 +7,7 @@ export default {
             pool.getConnection((err, connection) => {
                 if (err) throw err;
             
-                const query = mysql.format('SELECT * FROM reports WHERE accountId = ?;', [accountId])
+                const query = mysql.format('SELECT * FROM reports WHERE accountId = ? ORDER BY date;', [accountId])
                 
                 connection.query(query, (err, result) => {
                     if (err) throw err

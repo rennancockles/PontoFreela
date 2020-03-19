@@ -30,19 +30,22 @@ export default {
         const { accountId } = reportInput
         const { records } = reportInput
         const report = { date: reportInput.date, obs: reportInput.obs }
+        console.log(moment(records[0].time, 'HH:mm'))
+        console.log(moment(records[1].time, 'HH:mm'))
+        console.log(moment(records[0].time, 'HH:mm') < moment(records[1].time, 'HH:mm'))
         
-        const reportId = await reportDAO.insert(report, accountId)
+        // const reportId = await reportDAO.insert(report, accountId)
 
-        if (reportId && reportId > 0) {
-            report.id = reportId
+        // if (reportId && reportId > 0) {
+        //     report.id = reportId
 
-            for (let i = 0; i < records.length; i++) {
-                const recordId = await recordDAO.insert(records[i], reportId)
-                records[i].id = recordId
-            }
+        //     for (let i = 0; i < records.length; i++) {
+        //         const recordId = await recordDAO.insert(records[i], reportId)
+        //         records[i].id = recordId
+        //     }
 
-            return { report, records }
-        }       
+        //     return { report, records }
+        // }       
 
         return null
     }
