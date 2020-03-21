@@ -12,28 +12,9 @@ function validateRecords(records) {
 }
 
 export default {
-    findById: async (id) => {
-        const report = await reportDAO.findById(id)
-        
-        if (!report) return null
+    findById: async id => reportDAO.findById(id),
 
-        const records = await recordDAO.listByReportId(report.id)
-
-        return { report, records }
-    },
-
-    listByAccountId: async (accountId) => {
-        let response = []
-        
-        const reports = await reportDAO.listByAccountId(accountId)
-
-        for (let i = 0; i < reports.length; i++) {
-            const records = await recordDAO.listByReportId(reports[i].id)
-            response.push({ report: reports[i], records })
-        }        
-
-        return response
-    },
+    listByAccountId: accountId => reportDAO.listByAccountId(accountId),
 
     insert: async (reportInput) => {
         const { accountId } = reportInput

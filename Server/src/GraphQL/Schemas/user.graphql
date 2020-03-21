@@ -1,5 +1,5 @@
 type Query {
-    user(id: Int): UserResponse
+    user(id: Int): User
 }
 
 type Mutation {
@@ -13,6 +13,7 @@ type User {
     birth: Date!
     email: String!
     company: String
+    accounts(onlyActive: Boolean): [Account]
 }
 
 input UserInput {
@@ -21,9 +22,4 @@ input UserInput {
     email: String!
     birth: Date!
     company: String
-}
-
-type UserResponse {
-    user: User!
-    accounts: [Account]
 }

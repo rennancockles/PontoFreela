@@ -9,6 +9,7 @@ type Account {
     name: String!
     hourlyRate: Float!
     active: Boolean!
+    reports: [Report]
 }
 
 input AccountInput {
