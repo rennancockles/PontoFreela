@@ -6,9 +6,9 @@ export default {
             query: `
                 mutation ($account: AccountInput!) {
                     account: upsertAccount (account: $account) {
-                        id,
-                        active,
-                        name,
+                        id
+                        active
+                        name
                         hourlyRate
                     }
                 }
@@ -29,10 +29,19 @@ export default {
             query: `
                 mutation ($account: AccountInput!) {
                     accounts: deleteAccount (account: $account) {
-                        id,
-                        active,
-                        name,
+                        id
+                        active
+                        name
                         hourlyRate
+                        reports {
+                            id
+                            date
+                            obs
+                            records {
+                                id
+                                time
+                            }
+                        }
                     }
                 }
             `,
@@ -52,9 +61,9 @@ export default {
             query: `
                 mutation ($id: ID!) {
                     account: setActive (id: $id) {
-                        id,
-                        active,
-                        name,
+                        id
+                        active
+                        name
                         hourlyRate
                     }
                 }

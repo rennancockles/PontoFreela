@@ -24,7 +24,10 @@ const actions = {
 
     // USER
     setUser ({ commit }, payload) {
-        commit('SET_USER', payload, { root: true })
+        commit('SET_USER', payload)
+    },
+    updateUser ({ commit }, payload) {
+        commit('UPDATE_USER', payload)
     },
 
     // ACCOUNTS
@@ -32,7 +35,7 @@ const actions = {
         commit('SET_ACCOUNTS', payload)
     },
     changeActive ({ commit }, payload) {
-        commit('SET_ACTIVE', payload, { root: true })
+        commit('SET_ACTIVE', payload)
     },
     updateAccounts ({ commit }, payload) {
         commit('UPDATE_ACCOUNTS', payload)

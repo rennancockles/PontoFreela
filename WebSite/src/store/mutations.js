@@ -1,3 +1,9 @@
+function fixHourlyRate (account) {
+    if (typeof account.hourlyRate === 'number') {
+        account.hourlyRate = account.hourlyRate.toFixed(2)
+    }
+}
+
 const mutations = {
     SET_BREADCRUMBS (store, payload) {
         store.breadcrumbs = payload
@@ -13,16 +19,16 @@ const mutations = {
 
     // USER
     SET_USER (store, payload) {
+        if (payload.accounts) payload.accounts.forEach(account => { fixHourlyRate(account) })
         store.user = payload
+    },
+    UPDATE_USER (store, payload) {
+        Object.assign(store.user, payload)
     },
 
     // ACCOUNTS
     SET_ACCOUNTS (store, payload) {
-        payload.forEach(account => {
-            if (typeof account.hourlyRate === 'number') {
-                account.hourlyRate = account.hourlyRate.toFixed(2)
-            }
-        })
+        payload.forEach(account => { fixHourlyRate(account) })
         store.user.accounts = payload
     },
     SET_ACTIVE (store, payload) {
@@ -34,10 +40,10 @@ const mutations = {
         }
     },
     UPDATE_ACCOUNTS (store, payload) {
-        const accounts = store.user.accounts.filter(account => account.id !== payload.id)
-        accounts.push(payload)
+        fixHourlyRate(payload)
 
-        this.commit('SET_ACCOUNTS', accounts)
+        const account = store.user.accounts.find(account => account.id === payload.id)
+        Object.assign(account || {}, payload)
     },
     REMOVE_ACCOUNT (store, payload) {
         const accounts = store.user.accounts.filter(account => account.id !== payload.id)

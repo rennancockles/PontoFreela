@@ -101,7 +101,7 @@ export default {
         this.payload = { ...this.user }
     },
     methods: {
-        ...mapActions(['setUser']),
+        ...mapActions(['updateUser']),
         onSubmit (evt) {
             this.setLoading(true)
 
@@ -110,8 +110,8 @@ export default {
                     const userResponse = data.data.user
 
                     if (userResponse && userResponse.id) {
-                        this.$auth.setItem('user', userResponse)
-                        this.setUser(userResponse)
+                        this.updateUser(userResponse)
+                        this.$auth.setItem('user', this.user)
                     }
 
                     this.setLoading(false)
