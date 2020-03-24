@@ -12,14 +12,12 @@ export default {
         this.$auth.clear()
         this.setIsLoggedIn(false)
         this.setUser({})
-        this.setAccounts([])
         this.$router.push({ name: 'auth.login' })
     },
     methods: {
         ...mapActions([
             'setIsLoggedIn',
-            'setUser',
-            'setAccounts'
+            'setUser'
         ])
     }
 }

@@ -14,12 +14,21 @@ export default {
                             email
                             birth
                             company
-                        }
-                        accounts {
-                            id
-                            name
-                            hourlyRate
-                            active
+                            accounts {
+                                id
+                                name
+                                hourlyRate
+                                active
+                                reports {
+                                    id
+                                    date
+                                    obs
+                                    records {
+                                        id
+                                        time
+                                    }
+                                }
+                            }
                         }
                     }
                 }
