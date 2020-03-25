@@ -52,6 +52,12 @@ const mutations = {
 
         this.commit('SET_ACCOUNTS', accounts)
     },
+
+    // REPORTS
+    SET_REPORTS (store, payload) {
+        const activeAccount = store.user.accounts.find(account => account.active)
+        activeAccount.reports = payload
+    },
     UPDATE_REPORTS (store, payload, getters) {
         const activeAccount = store.user.accounts.find(account => account.active)
         const report = activeAccount.reports.find(report => report.id === payload.id)

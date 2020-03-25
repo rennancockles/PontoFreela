@@ -44,7 +44,10 @@ const actions = {
         commit('REMOVE_ACCOUNT', payload)
     },
 
-    // Reports
+    // REPORTS
+    setReports ({ commit }, payload) {
+        commit('SET_REPORTS', payload)
+    },
     updateReports ({ commit }, payload) {
         commit('UPDATE_REPORTS', payload)
     }

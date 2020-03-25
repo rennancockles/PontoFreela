@@ -4,16 +4,14 @@ export default {
     list: (accountId) => {
         return $http.post('', {
             query: `
-                query($accountId: ID!) {
-                    reports: reports (accountId: $accountId) {
-                        report {
-                          id
-                          date
-                          obs
-                          records {
+                query($accountId: ID) {
+                    reports (accountId: $accountId) {
+                        id
+                        date
+                        obs
+                        records {
                             id
                             time
-                          }
                         }
                     }
                 }
