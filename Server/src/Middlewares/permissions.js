@@ -11,6 +11,6 @@ export default {
         upsertAccount: authRequired,
         deleteAccount: authRequired,
         setActive: authRequired,
-        insertReport: authRequired
+        upsertReport: authRequired
     }
 }

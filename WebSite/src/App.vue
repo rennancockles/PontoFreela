@@ -55,7 +55,6 @@ export default {
     methods: {
         ...mapActions([
             'setUser',
-            'setAccounts',
             'setIsLoggedIn'
         ]),
         redirectLogin () {
@@ -66,7 +65,6 @@ export default {
         this.setIsLoggedIn(this.$auth.isLoggedIn())
         if (this.isLoggedIn) {
             this.setUser(this.$auth.getUser())
-            this.setAccounts(this.$auth.getAccounts())
         } else {
             this.redirectLogin()
         }

@@ -7,7 +7,7 @@ export const resolver = {
         reports: (_, { accountId }, { userId }) => reportBusiness.listByAccountId(accountId)
     },
     Mutation: {
-        insertReport: (_, { report }, { userId }) => reportBusiness.insert(report)
+        upsertReport: (_, { report }, { userId }) => reportBusiness.upsert(report)
     },
     Report: {
         records: parent => recordBusiness.listByReportId(parent.id)

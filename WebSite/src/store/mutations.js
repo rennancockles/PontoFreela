@@ -43,12 +43,21 @@ const mutations = {
         fixHourlyRate(payload)
 
         const account = store.user.accounts.find(account => account.id === payload.id)
-        Object.assign(account || {}, payload)
+
+        if (account) Object.assign(account || {}, payload)
+        else store.user.accounts.push(payload)
     },
     REMOVE_ACCOUNT (store, payload) {
         const accounts = store.user.accounts.filter(account => account.id !== payload.id)
 
         this.commit('SET_ACCOUNTS', accounts)
+    },
+    UPDATE_REPORTS (store, payload, getters) {
+        const activeAccount = store.user.accounts.find(account => account.active)
+        const report = activeAccount.reports.find(report => report.id === payload.id)
+
+        if (report) Object.assign(report || {}, payload)
+        else activeAccount.reports.push(payload)
     }
 }
 

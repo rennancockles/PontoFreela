@@ -4,14 +4,14 @@
     v-model="timeActivator"
     :close-on-content-click="false"
     transition="scale-transition"
-    :return-value.sync="time"
+    :return-value.sync="payload.time"
     offset-y
     max-width="290px"
     min-width="290px"
     >
         <template v-slot:activator="{ on }">
             <v-text-field
-            v-model="time"
+            v-model="payload.time"
             :label="label"
             :rules="$rules.required"
             readonly
@@ -27,11 +27,11 @@
         <v-time-picker
         v-if="timeActivator"
         no-title
-        v-model="time"
+        v-model="payload.time"
         locale="pt-br"
         format="24hr"
         color="secondary"
-        @click:minute="$refs.timeActivator.save(time)"
+        @click:minute="$refs.timeActivator.save(payload.time)"
         ></v-time-picker>
     </v-menu>
 </template>
@@ -40,18 +40,21 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-    name: 'NewTime',
-    props: ['id'],
+    name: 'NewRecord',
+    props: ['index'],
     data () {
         return {
             timeActivator: false,
-            time: ''
+            payload: {
+                id: null,
+                time: ''
+            }
         }
     },
     computed: {
-        ...mapGetters(['recordTime']),
+        ...mapGetters(['records']),
         label () {
-            return (this.id % 2 === 0) ? `Entrada ${this.id / 2 + 1}` : `Saída ${(this.id + 1) / 2}`
+            return (this.index % 2 === 0) ? `Entrada ${this.index / 2 + 1}` : `Saída ${(this.index + 1) / 2}`
         },
         formattedTime () {
             return this.$options.filters.toBRTime(this.time)
@@ -61,18 +64,24 @@ export default {
         this.getTime()
     },
     methods: {
-        ...mapActions(['removeTime', 'setRecordTime']),
+        ...mapActions(['removeRecord', 'updateRecord']),
         getTime () {
-            this.time = this.recordTime(this.id)
+            this.payload = this.records[this.index]
         },
         onDelete () {
-            this.removeTime(this.id)
+            this.removeRecord(this.index)
             this.getTime()
         }
     },
     watch: {
-        time: function (newValue) {
-            this.setRecordTime({ index: this.id, value: newValue })
+        payload: {
+            handler: function (newValue) {
+                this.updateRecord({ index: this.index, ...newValue })
+            },
+            deep: true
+        },
+        records () {
+            this.getTime()
         }
     }
 }

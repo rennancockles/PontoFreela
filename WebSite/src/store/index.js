@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import recordStore from './record.js'
+import reportStore from './report.js'
 import summaryStore from './summary.js'
 
 import state from './state'
@@ -17,7 +17,7 @@ export default new Vuex.Store({
     mutations,
     actions,
     modules: {
-        recordStore,
+        reportStore,
         summaryStore
     }
 })
