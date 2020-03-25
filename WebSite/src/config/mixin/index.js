@@ -17,7 +17,7 @@ Vue.mixin({
             this.$router.go(-1)
         },
         $message (message = 'OK', type = 'warning') {
-            console.log(message)
+            // console.log(message)
             // return swal.fire('', message, type || '')
         },
         // $askBefore (
@@ -49,27 +49,15 @@ Vue.mixin({
             if (typeof error === 'string') {
                 this.$message(error, 'error')
             } else {
-                const { response } = error
-                if (!response) {
+                const { message } = error
+                console.log(message)
+                if (!message) {
                     this.$message('Error Internal Server', 'error')
                 } else {
-                    const { message, sqlMessage } = response.data
                     if (message === 'JWT Invalid.') {
                         this.$sessionExpired()
                     } else {
-                        switch (response.status) {
-                        case 400:
-                            this.$message(message || sqlMessage || 'Bad Request', 'warning')
-                            break
-                        case 401:
-                            // this.$message('Você não tem permissão para acessar esta página', 'error')
-                            // this.$router.push({ path: '/' })
-                            this.$sessionExpired()
-                            break
-                        default:
-                            this.$message(message || sqlMessage || 'Error Internal Server', 'error')
-                            break
-                        }
+                        this.$message(message || 'Error Internal Server', 'error')
                     }
                 }
             }
