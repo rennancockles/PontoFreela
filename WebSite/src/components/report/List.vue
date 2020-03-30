@@ -1,14 +1,38 @@
 <template>
-    <p>
-        VUEX REPORTS
-        <br>
-        {{ activeAccount.reports }}
-        <br>
-        <br>
-        REPORTS
-        <br>
-        {{ reports }}
-    </p>
+    <v-card flat>
+        <v-card-title class="primary white--text title">
+            RELATÓRIO DE HORAS
+            <span class="ml-3">
+                <v-btn small class="success mb-1" icon @click="onAddTime()">
+                    <v-icon color="white">mdi-plus</v-icon>
+                </v-btn>
+            </span>
+        </v-card-title>
+
+        <v-card-text>
+            <v-data-table
+            :headers="headers"
+            :items="reports"
+            sort-by="dateFormatted"
+            class="elevation-1"
+            locale="pt-BR"
+            sort-desc
+            must-sort
+            >
+                <template v-slot:item.actions="{ item }">
+                    <v-icon small class="mr-2" @click="onEditItem(item)">
+                        mdi-pencil
+                    </v-icon>
+                    <v-icon small @click="onDeleteItem(item)">
+                        mdi-delete
+                    </v-icon>
+                </template>
+                <!-- <template v-slot:no-data>
+                    <v-btn color="primary" @click="initialize">Reset</v-btn>
+                </template> -->
+            </v-data-table>
+        </v-card-text>
+    </v-card>
 </template>
 
 <script>
@@ -21,7 +45,27 @@ export default {
         reports: []
     }),
     computed: {
-        ...mapGetters(['activeAccount'])
+        ...mapGetters(['activeAccount']),
+        headers () {
+            if (this.reports.length === 0) return []
+
+            const headers = [{ text: 'Data', value: 'dateFormatted' }]
+            let maxRecordLength = Math.max(...this.reports.map(r => r.records.length))
+            maxRecordLength = maxRecordLength % 2 === 0 ? maxRecordLength : maxRecordLength + 1
+
+            for (let i = 0; i < maxRecordLength; i++) {
+                if (i % 2 === 0) {
+                    headers.push({ text: `Entrada ${i / 2 + 1}`, value: `records[${i}].timeFormatted`, sortable: false })
+                } else {
+                    headers.push({ text: `Saída ${(i + 1) / 2}`, value: `records[${i}].timeFormatted`, sortable: false })
+                }
+            }
+
+            headers.push({ text: 'Total', value: 'workedTime', sortable: false })
+            headers.push({ text: 'Actions', value: 'actions', sortable: false })
+
+            return headers
+        }
     },
     async created () {
         await this.getReports()
@@ -46,6 +90,15 @@ export default {
                     this.setLoading(false)
                 })
                 .catch(this.$throwException)
+        },
+        onAddTime () {
+            console.log('Add now')
+        },
+        onEditItem (item) {
+            console.log({ message: 'Edit item', item })
+        },
+        onDeleteItem (item) {
+            console.log({ message: 'Delete item', item })
         }
     }
 }
