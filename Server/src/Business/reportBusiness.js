@@ -11,10 +11,48 @@ function validateRecords(records) {
     return true
 }
 
-export default {
-    findById: id => reportDAO.findById(id),
+function getDiffTime(reportDate, initialRecord, finalRecord) {
+    const isToday = moment().diff(moment(reportDate), 'days') === 0
+    const finalTime = finalRecord ? finalRecord.time : isToday ? moment().format('HH:mm:ss') : '24:00:00'
+    const a = moment(finalTime, 'HH:mm:ss')
+    const b = moment(initialRecord.time, 'HH:mm:ss')
+    return a.diff(b)
+}
 
-    listByAccountId: accountId => reportDAO.listByAccountId(accountId),
+function setWorkedTime(report) {
+    let diff = 0
+    const { records } = report
+
+    for (let j = 0; j < records.length; j += 2) {
+        diff += getDiffTime(report.date, records[j], records[j + 1])
+    }
+
+    report.workedMS = diff
+    report.workedTime = moment.utc(diff).format('HH:mm')
+}
+
+export default {
+    findById: async id => {
+        const report = await reportDAO.findById(id)
+        report.records = await recordBusiness.listByReportId(report.id)
+
+        setWorkedTime(report)
+
+        return report
+    },
+
+    listByAccountId: async accountId => {
+        const reports = await reportDAO.listByAccountId(accountId)
+
+        for (let i = 0; i < reports.length; i++) {
+            const report = reports[i]
+            report.records = await recordBusiness.listByReportId(report.id)
+
+            setWorkedTime(report)
+        }
+
+        return reports
+    },
 
     upsert: reportInput => {
         const horasValidas = validateRecords(reportInput.records)

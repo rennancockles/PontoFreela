@@ -23,6 +23,8 @@ export default {
                                     id
                                     date
                                     obs
+                                    workedMS
+                                    workedTime
                                     records {
                                         id
                                         time

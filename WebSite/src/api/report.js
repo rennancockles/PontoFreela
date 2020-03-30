@@ -10,6 +10,8 @@ export default {
                         date
                         dateFormatted
                         obs
+                        workedMS
+                        workedTime
                         records {
                             id
                             time
@@ -33,6 +35,8 @@ export default {
                         date
                         dateFormatted
                         obs
+                        workedMS
+                        workedTime
                         records {
                             id
                             time

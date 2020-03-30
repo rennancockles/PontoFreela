@@ -8,8 +8,5 @@ export const resolver = {
     },
     Mutation: {
         upsertReport: (_, { report }, { userId }) => reportBusiness.upsert(report)
-    },
-    Report: {
-        records: parent => recordBusiness.listByReportId(parent.id)
     }
 }

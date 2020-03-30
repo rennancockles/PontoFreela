@@ -12,6 +12,8 @@ type Report {
     date: Date!
     dateFormatted: String
     obs: String
+    workedMS: Int
+    workedTime: String
     records: [Record]
 }
 
