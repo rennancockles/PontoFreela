@@ -10,22 +10,14 @@ import reportRoutes from './report'
 Vue.use(VueRouter)
 
 const routes = [
-    // {
-    //     path: '*',
-    //     redirect: { name: 'home.index' }
-    // },
-    // {
-    //     path: '/',
-    //     redirect: { name: 'home.index' }
-    // },
-    // {
-    //     path: '/home',
-    //     name: 'home.index',
-    //     component: Home,
-    //     meta: {
-    //         auth: true
-    //     }
-    // },
+    {
+        path: '*',
+        redirect: '/'
+    },
+    {
+        path: '/',
+        redirect: { name: 'report.list' }
+    },
     ...authRoutes,
     ...configRoutes,
     ...reportRoutes
