@@ -7,7 +7,7 @@ export default {
             pool.getConnection((err, connection) => {
                 if (err) throw err;
             
-                const query = mysql.format('SELECT * FROM reports WHERE accountId = ? ORDER BY date;', [accountId])
+                const query = mysql.format('SELECT *, DATE_FORMAT(date, "%d/%m/%Y") dateFormatted FROM reports WHERE accountId = ? ORDER BY date;', [accountId])
                 
                 connection.query(query, (err, result) => {
                     if (err) throw err
@@ -29,7 +29,7 @@ export default {
             pool.getConnection((err, connection) => {
                 if (err) throw err;
             
-                const query = mysql.format('SELECT * FROM reports WHERE id = ?;', [id])
+                const query = mysql.format('SELECT *, DATE_FORMAT(date, "%d/%m/%Y") dateFormatted FROM reports WHERE id = ?;', [id])
                 
                 connection.query(query, (err, result) => {
                     if (err) throw err

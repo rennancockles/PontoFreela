@@ -12,7 +12,7 @@ function validateRecords(records) {
 }
 
 export default {
-    findById: async id => reportDAO.findById(id),
+    findById: id => reportDAO.findById(id),
 
     listByAccountId: accountId => reportDAO.listByAccountId(accountId),
 

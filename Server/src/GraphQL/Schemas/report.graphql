@@ -10,6 +10,7 @@ type Mutation {
 type Report {
     id: ID!
     date: Date!
+    dateFormatted: String
     obs: String
     records: [Record]
 }

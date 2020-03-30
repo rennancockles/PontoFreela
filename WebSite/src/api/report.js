@@ -8,10 +8,12 @@ export default {
                     reports (accountId: $accountId) {
                         id
                         date
+                        dateFormatted
                         obs
                         records {
                             id
                             time
+                            timeFormatted
                         }
                     }
                 }
@@ -29,10 +31,12 @@ export default {
                     report: upsertReport (report: $report) {
                         id
                         date
+                        dateFormatted
                         obs
                         records {
                             id
                             time
+                            timeFormatted
                         }
                     }
                 }

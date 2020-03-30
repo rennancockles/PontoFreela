@@ -1,6 +1,7 @@
 type Record {
     id: ID!
     time: Time!
+    timeFormatted: String
 }
 
 input RecordInput {
