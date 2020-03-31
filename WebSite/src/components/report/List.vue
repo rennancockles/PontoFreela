@@ -20,11 +20,16 @@
             sort-desc
             must-sort
             >
+                <template v-slot:item.workedTime="{ item }">
+                    <v-chip color="info" class="text-no-wrap" dark>
+                        {{ item.workedTime }}
+                    </v-chip>
+                </template>
                 <template v-slot:item.actions="{ item }">
-                    <v-icon small class="mr-2" @click="onEditItem(item)">
+                    <v-icon small color="primary" class="mr-2" @click="onEditItem(item)">
                         mdi-pencil
                     </v-icon>
-                    <v-icon small @click="onDeleteItem(item)">
+                    <v-icon small color="danger" @click="onDeleteItem(item)">
                         mdi-delete
                     </v-icon>
                 </template>
