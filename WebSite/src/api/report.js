@@ -26,6 +26,31 @@ export default {
         })
     },
 
+    addNow: (accountId) => {
+        return $http.post('', {
+            query: `
+                mutation ($accountId: ID!) {
+                    report: addNow (accountId: $accountId) {
+                        id
+                        date
+                        dateFormatted
+                        obs
+                        workedMS
+                        workedTime
+                        records {
+                            id
+                            time
+                            timeFormatted
+                        }
+                    }
+                }
+            `,
+            variables: {
+                accountId
+            }
+        })
+    },
+
     upsert: ({ accountId, id, date, obs, records }) => {
         return $http.post('', {
             query: `

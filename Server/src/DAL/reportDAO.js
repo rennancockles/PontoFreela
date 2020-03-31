@@ -24,6 +24,28 @@ export default {
         })
     },
 
+    findTodayByAccountId: (accountId) => {
+        return new Promise((resolve, reject) => {
+            pool.getConnection((err, connection) => {
+                if (err) throw err;
+            
+                const query = mysql.format('SELECT *, DATE_FORMAT(date, "%d/%m/%Y") dateFormatted FROM reports WHERE accountId = ? AND date = DATE(NOW());', [accountId])
+                
+                connection.query(query, (err, result) => {
+                    if (err) throw err
+
+                    if (result) {
+                        resolve(result[0])
+                    } else {
+                        reject(new Error("Error getting report!"))
+                    }
+
+                    connection.release();
+                })
+            })
+        })
+    },
+
     findById: (id) => {
         return new Promise((resolve, reject) => {
             pool.getConnection((err, connection) => {

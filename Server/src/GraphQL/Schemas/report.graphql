@@ -4,6 +4,7 @@ type Query {
 }
 
 type Mutation {
+    addNow(accountId: ID!): Report
     upsertReport(report: ReportInput!): Report
     deleteReport(report: ReportInput!): [Report!]
 }

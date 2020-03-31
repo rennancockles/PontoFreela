@@ -15,9 +15,10 @@ function validateRecords(records) {
 
 function getDiffTime(reportDate, initialRecord, finalRecord) {
     const isToday = moment().diff(moment(reportDate), 'days') === 0
-    const finalTime = finalRecord ? finalRecord.time : isToday ? moment().format('HH:mm:ss') : '24:00:00'
-    const a = moment(finalTime, 'HH:mm:ss')
-    const b = moment(initialRecord.time, 'HH:mm:ss')
+    const finalTime = finalRecord ? finalRecord.time : isToday ? moment().format('HH:mm') : '24:00'
+    const a = moment(finalTime, 'HH:mm')
+    const b = moment(initialRecord.time, 'HH:mm')
+
     return a.diff(b)
 }
 
@@ -89,6 +90,23 @@ export default {
         }
 
         return reports
+    },
+
+    addNow: async accountId => {
+        const newRecord = { time: moment().format('HH:mm:ss'), timeFormatted: moment().format('HH:mm') }
+        let report = await reportDAO.findTodayByAccountId(accountId)
+        
+        if (report && report.id > 0) {
+            newRecord.reportId = report.id
+
+            report.records = await recordBusiness.listByReportId(report.id)
+            report.records.push(newRecord)
+
+        } else {
+            report = { date: moment().format('YYYY-MM-DD'), dateFormatted: moment().format('DD/MM/YYYY'), obs: '', records: [newRecord]}
+        }
+
+        return exports.default.upsert({ accountId, ...report })
     },
 
     upsert: reportInput => {

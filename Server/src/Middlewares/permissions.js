@@ -10,8 +10,9 @@ export default {
         updateUser: authRequired,
         upsertAccount: authRequired,
         deleteAccount: authRequired,
-        deleteReport: authRequired,
         setActive: authRequired,
-        upsertReport: authRequired
+        addNow: authRequired,
+        upsertReport: authRequired,
+        deleteReport: authRequired
     }
 }

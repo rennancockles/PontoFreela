@@ -2,11 +2,12 @@
     <v-card flat>
         <v-card-title class="primary white--text title">
             RELATÓRIO DE HORAS
-            <span class="ml-3">
-                <v-btn small class="success mb-1" icon @click="onAddTime()">
-                    <v-icon color="white">mdi-plus</v-icon>
-                </v-btn>
-            </span>
+
+            <v-spacer></v-spacer>
+
+            <v-btn class="secondary" text @click="onAddTime()">
+                Registrar Agora
+            </v-btn>
         </v-card-title>
 
         <v-card-text>
@@ -71,7 +72,7 @@ export default {
         await this.getReports()
     },
     methods: {
-        ...mapActions(['setReports']),
+        ...mapActions(['setReports', 'updateReports']),
         async getReports () {
             this.setLoading(true)
 
@@ -92,7 +93,23 @@ export default {
                 .catch(this.$throwException)
         },
         onAddTime () {
-            console.log('Add now')
+            this.setLoading(true)
+
+            API.addNow(this.activeAccount.id)
+                .then(async ({ data }) => {
+                    const reportResponse = data.data.report
+                    const errors = data.errors
+
+                    if (errors && errors.length > 0) {
+                        this.$throwException(errors[0])
+                    } else {
+                        this.updateReports(reportResponse)
+                    }
+
+                    await this.getReports()
+                    this.setLoading(false)
+                })
+                .catch(this.$throwException)
         },
         onEditItem (item) {
             const id = item.id
