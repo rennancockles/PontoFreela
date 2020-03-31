@@ -22,12 +22,14 @@ export default {
                                 reports {
                                     id
                                     date
+                                    dateFormatted
                                     obs
                                     workedMS
                                     workedTime
                                     records {
                                         id
                                         time
+                                        timeFormatted
                                     }
                                 }
                             }

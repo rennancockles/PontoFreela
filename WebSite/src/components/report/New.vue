@@ -75,6 +75,7 @@ import API from '@/api/report'
 
 export default {
     name: 'NewReport',
+    props: ['id'],
     components: {
         NewRecord
     },
@@ -83,6 +84,7 @@ export default {
             frmValid: true,
             dateActivator: false,
             payload: {
+                id: null,
                 date: '',
                 obs: '',
                 records: []
@@ -96,12 +98,20 @@ export default {
         }
     },
     created () {
+        let date = this.$options.filters.toISODate(new Date())
+
+        if (this.id) {
+            const report = this.activeAccount.reports.find(rep => rep.id === this.id)
+            date = this.$options.filters.toISODate(report.date)
+            this.setReport(report)
+        }
+
         this.payload = this.report
-        this.payload.date = this.$options.filters.toISODate(new Date())
+        this.payload.date = date
         if (this.payload.records.length === 0) this.onAddTime()
     },
     methods: {
-        ...mapActions(['addRecord', 'updateReports']),
+        ...mapActions(['addRecord', 'updateReports', 'setReport']),
         onAddTime () {
             this.addRecord((new Date()).toLocaleTimeString().replace(/:\d\d$/, ''))
         },

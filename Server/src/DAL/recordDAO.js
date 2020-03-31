@@ -78,6 +78,7 @@ export default {
 
                 const query = mysql.format('UPDATE records SET time = ? WHERE id = ? AND reportId = ?;', [
                     record.time,
+                    record.id,
                     reportId
                 ])
 

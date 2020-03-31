@@ -69,7 +69,6 @@ export default {
     },
     async created () {
         await this.getReports()
-        this.reports = [...this.activeAccount.reports]
     },
     methods: {
         ...mapActions(['setReports']),
@@ -87,6 +86,7 @@ export default {
                         this.setReports(reportsResponse)
                     }
 
+                    this.reports = [...this.activeAccount.reports]
                     this.setLoading(false)
                 })
                 .catch(this.$throwException)
@@ -95,10 +95,27 @@ export default {
             console.log('Add now')
         },
         onEditItem (item) {
-            console.log({ message: 'Edit item', item })
+            const id = item.id
+            this.$router.push({ name: 'report.edit', params: { id } })
         },
-        onDeleteItem (item) {
-            console.log({ message: 'Delete item', item })
+        async onDeleteItem (item) {
+            this.setLoading(true)
+
+            await API.delete({ ...item, accountId: this.activeAccount.id })
+                .then(async ({ data }) => {
+                    const reportsResponse = data.data.reports
+                    const errors = data.errors
+
+                    if (errors && errors.length > 0) {
+                        this.$throwException(errors[0])
+                    } else {
+                        this.setReports(reportsResponse)
+                    }
+
+                    await this.getReports()
+                    this.setLoading(false)
+                })
+                .catch(this.$throwException)
         }
     }
 }

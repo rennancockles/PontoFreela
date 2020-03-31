@@ -56,10 +56,11 @@ export default {
         }
     },
     created () {
+        this.setIsLoggedIn(this.$auth.isLoggedIn())
         if (this.isLoggedIn) this.$goHome()
     },
     methods: {
-        ...mapActions(['logIn']),
+        ...mapActions(['logIn', 'setIsLoggedIn']),
         onSubmit (evt) {
             this.setLoading(true)
 

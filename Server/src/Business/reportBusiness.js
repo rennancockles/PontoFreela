@@ -3,6 +3,8 @@ import recordBusiness from '../Business/recordBusiness'
 import reportDAO from '../DAL/reportDAO'
 
 function validateRecords(records) {
+    records[records.length - 1].time = records[records.length - 1].time === '00:00' ? '24:00' : records[records.length - 1].time
+
     for (let i = 1; i < records.length; i++) {
         if (moment(records[i-1].time, 'HH:mm') >= moment(records[i].time, 'HH:mm'))
             return false
@@ -29,6 +31,41 @@ function setWorkedTime(report) {
 
     report.workedMS = diff
     report.workedTime = moment.utc(diff).format('HH:mm')
+}
+
+async function insert (reportInput) {
+    const { accountId } = reportInput
+    const { records } = reportInput
+    const report = { date: reportInput.date, obs: reportInput.obs }
+
+    const reportId = await reportDAO.insert(report, accountId)
+
+    if (reportId && reportId > 0) {
+        report.id = reportId
+        report.records = await recordBusiness.insertMany(records, reportId)
+        setWorkedTime(report)
+
+        return report
+    }       
+
+    return null
+}
+
+async function update (reportInput) {
+    const { accountId } = reportInput
+    const { records } = reportInput
+    const report = { id: reportInput.id, date: reportInput.date, obs: reportInput.obs }
+
+    const success = await reportDAO.update(report, accountId)
+
+    if (success) {
+        report.records = await recordBusiness.upsertMany(records, report.id)
+        setWorkedTime(report)
+
+        return report
+    }       
+
+    return null
 }
 
 export default {
@@ -59,26 +96,21 @@ export default {
         if (!horasValidas) throw new Error("Horas inválidas!")
 
         if (!reportInput.id || reportInput.id == 0) {
-            return exports.default.insert(reportInput)
+            return insert(reportInput)
         } else {
-            console.log('UPDATE')
+            return update(reportInput)
         }
     },
 
-    insert: async (reportInput) => {
+    delete: async reportInput => {
         const { accountId } = reportInput
         const { records } = reportInput
-        const report = { date: reportInput.date, obs: reportInput.obs }
+        const report = { id: reportInput.id, date: reportInput.date, obs: reportInput.obs }
 
-        const reportId = await reportDAO.insert(report, accountId)
-
-        if (reportId && reportId > 0) {
-            report.id = reportId
-            report.records = await recordBusiness.insertMany(records, reportId)
-
-            return report
-        }       
-
-        return null
+        await recordBusiness.deleteMany(records, report.id)
+        const success = await reportDAO.delete(report, accountId)
+        
+        if (success) return exports.default.listByAccountId(accountId)
+        else return null
     }
 }

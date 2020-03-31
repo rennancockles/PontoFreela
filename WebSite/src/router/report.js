@@ -17,5 +17,14 @@ export default [
         meta: {
             auth: true
         }
+    },
+    {
+        path: '/report/:id/edit',
+        name: 'report.edit',
+        props: true,
+        component: New,
+        meta: {
+            auth: true
+        }
     }
 ]

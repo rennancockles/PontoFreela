@@ -1,6 +1,7 @@
 export default {
     state: {
         report: {
+            id: null,
             date: '',
             obs: '',
             records: []
@@ -18,6 +19,10 @@ export default {
         }
     },
     mutations: {
+        SET_REPORT (store, { id, date, obs, records }) {
+            records.forEach(rec => { rec.time = rec.timeFormatted })
+            store.report = { id, date, obs, records }
+        },
         ADD_RECORD (store, time) {
             store.report.records.push({ id: null, time })
         },
@@ -29,6 +34,9 @@ export default {
         }
     },
     actions: {
+        setReport ({ commit }, payload) {
+            commit('SET_REPORT', payload)
+        },
         addRecord ({ commit }, time) {
             commit('ADD_RECORD', time)
         },

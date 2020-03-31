@@ -55,5 +55,37 @@ export default {
                 }
             }
         })
+    },
+
+    delete: ({ accountId, id, date, obs, records }) => {
+        records = records.map(rec => ({ id: rec.id, time: rec.time }))
+        return $http.post('', {
+            query: `
+                mutation ($report: ReportInput!) {
+                    reports: deleteReport (report: $report) {
+                        id
+                        date
+                        dateFormatted
+                        obs
+                        workedMS
+                        workedTime
+                        records {
+                            id
+                            time
+                            timeFormatted
+                        }
+                    }
+                }
+            `,
+            variables: {
+                report: {
+                    accountId,
+                    id,
+                    date,
+                    obs,
+                    records
+                }
+            }
+        })
     }
 }
