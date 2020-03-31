@@ -23,15 +23,20 @@ export default {
     },
 
     upsertMany: async (records, reportId) => {
+        let dbRecords = await exports.default.listByReportId(reportId)
+
         for (let i = 0; i < records.length; i++) {
 
             if (!records[i].id || records[i].id == 0) {
                 const recordId = await recordDAO.insert(records[i], reportId)
                 records[i].id = recordId
             } else {
+                dbRecords = dbRecords.filter(rec => rec.id != records[i].id)
                 await recordDAO.update(records[i], reportId)
             }
         }
+
+        await exports.default.deleteMany(dbRecords, reportId)
 
         return records
     },
