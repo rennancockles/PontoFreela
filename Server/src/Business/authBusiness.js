@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import accountBusiness from '../Business/accountBusiness'
 import userDAO from '../DAL/userDAO'
+import mailer from '../Email/recover'
 
 function getToken ({ id }) {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -35,11 +36,9 @@ export default {
         const user = await userDAO.findByEmail(email)
 
         if (user) {
-            console.log('envia email')
-        } else {
-            console.log('not found')
+            mailer.send(user)
         }
 
-        return 'Ok'
+        return ''
     }
 }
