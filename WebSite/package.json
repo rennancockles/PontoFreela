@@ -13,6 +13,7 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "register-service-worker": "^1.6.2",
+    "sweetalert2": "^9.10.8",
     "v-money": "^0.8.1",
     "vue": "^2.6.11",
     "vue-currency-filter": "^4.0.3",

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-// import swal from 'sweetalert2'
+import swal from 'sweetalert2'
 
 import { mapActions } from 'vuex'
 
@@ -17,8 +17,7 @@ Vue.mixin({
             this.$router.go(-1)
         },
         $message (message = 'OK', type = 'warning') {
-            // console.log(message)
-            // return swal.fire('', message, type || '')
+            return swal.fire('', message, type || '')
         },
         // $askBefore (
         //     fnConfirmation,

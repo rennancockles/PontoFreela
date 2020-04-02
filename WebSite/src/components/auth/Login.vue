@@ -84,7 +84,7 @@ export default {
         },
         recover () {
             if (!this.payload.email || this.payload.email === '') {
-                this.$message('Preencha o email')
+                this.$message('O campo email precisa estar preenchido')
             } else if ((!/.+@.+\..+/.test(this.payload.email))) {
                 this.$message('E-mail inválido')
             } else {
