@@ -2,7 +2,20 @@ type Query {
     login(email: String!, password: String!): AuthResponse
 }
 
+type Mutation {
+    register(user: AuthInput!): AuthResponse
+}
+
 type AuthResponse {
     user: User!
     token: String!
+}
+
+input AuthInput {
+    name: String!
+    lastname: String!
+    email: String!
+    password: String!
+    birth: Date!
+    company: String
 }

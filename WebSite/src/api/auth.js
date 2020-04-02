@@ -42,5 +42,54 @@ export default {
                 password
             }
         })
+    },
+
+    register: ({ name, lastname, email, birth, company, password }) => {
+        return $http.post('', {
+            query: `
+                mutation ($user: AuthInput!) {
+                    login: register (user: $user) {
+                        token
+                        user {
+                            id
+                            name
+                            lastname
+                            email
+                            birth
+                            company
+                            accounts {
+                                id
+                                name
+                                hourlyRate
+                                active
+                                reports {
+                                    id
+                                    date
+                                    dateFormatted
+                                    obs
+                                    workedMS
+                                    workedTime
+                                    records {
+                                        id
+                                        time
+                                        timeFormatted
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            `,
+            variables: {
+                user: {
+                    name,
+                    lastname,
+                    email,
+                    password,
+                    birth,
+                    company
+                }
+            }
+        })
     }
 }

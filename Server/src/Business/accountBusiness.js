@@ -7,13 +7,12 @@ export default {
         if (account.id) {
             return exports.default.update(account, userId)
         } else {
+            account.active = false
             return exports.default.insert(account, userId)
         }
     },
 
     insert: async (account, userId) => {
-        account.active = false
-
         const id = await accountDAO.insert(account, userId)
 
         if (id) {

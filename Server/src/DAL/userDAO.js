@@ -93,5 +93,34 @@ export default {
                 })
             })
         })
+    },
+    
+    create: (user) => {
+        return new Promise((resolve, reject) => {
+            pool.getConnection((err, connection) => {
+                if (err) throw err;
+
+                const query = mysql.format('INSERT INTO users (name, lastname, email, birth, company, password) VALUES (?, ?, ?, ?, ?, ?);', [
+                    user.name,
+                    user.lastname,
+                    user.email,
+                    user.birth,
+                    user.company,
+                    user.password
+                ])
+
+                connection.query(query, (err, result) => {
+                    if (err) throw err
+
+                    if (result) {
+                        resolve(result.insertId)
+                    } else {
+                        reject(new Error("Error creating user!"))
+                    }
+
+                    connection.release();
+                })
+            })
+        })
     }
 }

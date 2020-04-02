@@ -29,6 +29,16 @@
                 </v-card-text>
 
                 <v-card-actions>
+                    <div class="ml-3">
+                        <p class="caption mb-0">
+                            Esqueceu sua senha?
+                            <router-link tag="a" to="/">Recupere</router-link>
+                        </p>
+                        <p class="caption mb-0">
+                            Não possui conta?
+                            <router-link tag="a" to="/auth/register">Cadastre-se</router-link>
+                        </p>
+                    </div>
                     <v-spacer />
                     <v-btn type="button" @click="onSubmit()" color="primary">Login</v-btn>
                 </v-card-actions>
