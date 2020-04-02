@@ -32,7 +32,7 @@
                     <div class="ml-3">
                         <p class="caption mb-0">
                             Esqueceu sua senha?
-                            <router-link tag="a" to="/">Recupere</router-link>
+                            <a href="" @click.prevent="recover()">Recupere</a>
                         </p>
                         <p class="caption mb-0">
                             Não possui conta?
@@ -81,6 +81,24 @@ export default {
                     this.$goHome()
                 })
                 .catch(this.$throwException)
+        },
+        recover () {
+            if (!this.payload.email || this.payload.email === '') {
+                this.$message('Preencha o email')
+            } else if ((!/.+@.+\..+/.test(this.payload.email))) {
+                this.$message('E-mail inválido')
+            } else {
+                this.$message('Um e-mail será enviado com as informações para recuperar a senha', 'info')
+
+                this.setLoading(true)
+
+                API.recover(this.payload.email)
+                    .then(({ data }) => {
+                        this.setLoading(false)
+                        this.$goHome()
+                    })
+                    .catch(this.$throwException)
+            }
         }
     }
 }

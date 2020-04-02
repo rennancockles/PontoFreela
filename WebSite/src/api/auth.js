@@ -91,5 +91,18 @@ export default {
                 }
             }
         })
+    },
+
+    recover: (email) => {
+        return $http.post('', {
+            query: `
+                query ($email: String!) {
+                    recover (email: $email)
+                }
+            `,
+            variables: {
+                email
+            }
+        })
     }
 }

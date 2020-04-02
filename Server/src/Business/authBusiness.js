@@ -29,5 +29,17 @@ export default {
         const token = getToken(user)
 
         return { token, user }
+    },
+
+    recover: async email => {
+        const user = await userDAO.findByEmail(email)
+
+        if (user) {
+            console.log('envia email')
+        } else {
+            console.log('not found')
+        }
+
+        return 'Ok'
     }
 }

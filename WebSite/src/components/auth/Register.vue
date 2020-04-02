@@ -94,6 +94,7 @@
 
                 <v-card-actions>
                     <v-spacer />
+                    <v-btn color="danger" @click="onCancel" dark>Cancelar</v-btn>
                     <v-btn color="primary" @click="onSubmit($event)" :disabled="!frmValid">Cadastrar</v-btn>
                 </v-card-actions>
             </v-card>
@@ -146,6 +147,9 @@ export default {
                     this.$goHome()
                 })
                 .catch(this.$throwException)
+        },
+        onCancel () {
+            this.$goHome()
         },
         equalPasswords (v) {
             return v === this.payload.password || 'As senhas devem ser iguais!'
