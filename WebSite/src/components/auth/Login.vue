@@ -92,7 +92,7 @@ export default {
 
                 this.setLoading(true)
 
-                API.recover(this.payload.email)
+                API.recoverEmail(this.payload.email)
                     .then(({ data }) => {
                         this.setLoading(false)
                         this.$goHome()

@@ -93,11 +93,11 @@ export default {
         })
     },
 
-    recover: (email) => {
+    recoverEmail: (email) => {
         return $http.post('', {
             query: `
                 query ($email: String!) {
-                    recover (email: $email)
+                    recoverEmail (email: $email)
                 }
             `,
             variables: {
