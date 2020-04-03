@@ -2,12 +2,14 @@ import mysql from 'mysql'
 import pool from './db'
 
 export default {    
-    listByAccountId: (accountId) => {
+    listByAccountId: (accountId, { dateFrom, dateTo }) => {
         return new Promise((resolve, reject) => {
             pool.getConnection((err, connection) => {
-                if (err) throw err;
-            
-                const query = mysql.format('SELECT *, DATE_FORMAT(date, "%d/%m/%Y") dateFormatted FROM reports WHERE accountId = ? ORDER BY date;', [accountId])
+                if (err) throw err
+
+                let query = mysql.format('SELECT *, DATE_FORMAT(date, "%d/%m/%Y") dateFormatted FROM reports WHERE accountId = ?', [accountId])
+                const queryWhere = (dateFrom && dateTo) ? mysql.format('AND date BETWEEN ? AND ?', [dateFrom, dateTo]) : '' 
+                query += ` ${queryWhere} ORDER BY date;`
                 
                 connection.query(query, (err, result) => {
                     if (err) throw err
@@ -18,7 +20,7 @@ export default {
                         reject(new Error("Error getting reports of account!"))
                     }
 
-                    connection.release();
+                    connection.release()
                 })
             })
         })

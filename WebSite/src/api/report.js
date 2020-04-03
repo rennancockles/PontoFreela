@@ -1,11 +1,11 @@
 import $http from '@/config/http'
 
 export default {
-    list: (accountId) => {
+    list: (accountId, filter) => {
         return $http.post('', {
             query: `
-                query($accountId: ID) {
-                    reports (accountId: $accountId) {
+                query($accountId: ID, $filter: ReportFilter) {
+                    reports (accountId: $accountId, filter: $filter) {
                         id
                         date
                         dateFormatted
@@ -21,7 +21,8 @@ export default {
                 }
             `,
             variables: {
-                accountId
+                accountId,
+                filter
             }
         })
     },

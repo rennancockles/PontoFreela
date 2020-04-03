@@ -2,12 +2,12 @@ import reportBusiness from '../../Business/reportBusiness';
 
 export const resolver = {
     Query: {
-        report: (_, { id }, { userId }) => reportBusiness.findById(id),
-        reports: (_, { accountId }, { userId }) => reportBusiness.listByAccountId(accountId)
+        report: (_, { id }) => reportBusiness.findById(id),
+        reports: (_, { accountId, filter }) => reportBusiness.listByAccountId(accountId, filter)
     },
     Mutation: {
-        addNow: (_, { accountId }, { userId }) => reportBusiness.addNow(accountId),
-        upsertReport: (_, { report }, { userId }) => reportBusiness.upsert(report),
-        deleteReport: (_, { report }, { userId }) => reportBusiness.delete(report)
+        addNow: (_, { accountId }) => reportBusiness.addNow(accountId),
+        upsertReport: (_, { report }) => reportBusiness.upsert(report),
+        deleteReport: (_, { report }) => reportBusiness.delete(report)
     }
 }

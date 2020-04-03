@@ -79,8 +79,8 @@ export default {
         return report
     },
 
-    listByAccountId: async accountId => {
-        const reports = await reportDAO.listByAccountId(accountId)
+    listByAccountId: async (accountId, filter) => {
+        const reports = await reportDAO.listByAccountId(accountId, filter)
 
         for (let i = 0; i < reports.length; i++) {
             const report = reports[i]

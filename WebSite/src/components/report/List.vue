@@ -1,42 +1,115 @@
 <template>
-    <v-card flat>
-        <v-card-title class="primary white--text title">
-            RELATÓRIO DE HORAS
+    <div>
+        <v-form @submit.prevent="getReports">
+            <v-row>
+                <v-col cols="12" sm="6" md="2">
+                    <v-menu
+                    ref="dateFromActivator"
+                    v-model="dateFromActivator"
+                    :close-on-content-click="false"
+                    transition="scale-transition"
+                    offset-y
+                    max-width="290px"
+                    min-width="290px"
+                    >
+                        <template v-slot:activator="{ on }">
+                            <v-text-field
+                            :value="formattedDateFrom"
+                            label="Data Inicial"
+                            :rules="$rules.required"
+                            readonly
+                            v-on="on"
+                            ></v-text-field>
+                        </template>
+                        <v-date-picker
+                        no-title
+                        v-model="filter.dateFrom"
+                        locale="pt-br"
+                        color="secondary"
+                        @input="dateFromActivator = false"
+                        ></v-date-picker>
+                    </v-menu>
+                </v-col>
 
-            <v-spacer></v-spacer>
+                <v-col cols="12" sm="6" md="2">
+                    <v-menu
+                    ref="dateToActivator"
+                    v-model="dateToActivator"
+                    :close-on-content-click="false"
+                    transition="scale-transition"
+                    offset-y
+                    max-width="290px"
+                    min-width="290px"
+                    >
+                        <template v-slot:activator="{ on }">
+                            <v-text-field
+                            :value="formattedDateTo"
+                            label="Data Final"
+                            :rules="$rules.required"
+                            readonly
+                            v-on="on"
+                            ></v-text-field>
+                        </template>
+                        <v-date-picker
+                        no-title
+                        v-model="filter.dateTo"
+                        locale="pt-br"
+                        color="secondary"
+                        @input="dateToActivator = false"
+                        ></v-date-picker>
+                    </v-menu>
+                </v-col>
 
-            <v-btn class="secondary" text @click="onAddTime()">
-                Registrar Agora
-            </v-btn>
-        </v-card-title>
+                <v-spacer></v-spacer>
 
-        <v-card-text>
-            <v-data-table
-            :headers="headers"
-            :items="reports"
-            sort-by="dateFormatted"
-            class="elevation-1"
-            locale="pt-BR"
-            :custom-sort="sortByDate"
-            sort-desc
-            must-sort
-            >
-                <template v-slot:item.workedTime="{ item }">
-                    <v-chip color="info" class="text-no-wrap" dark>
-                        {{ item.workedTime }}
-                    </v-chip>
-                </template>
-                <template v-slot:item.actions="{ item }">
-                    <v-icon small color="primary" class="mr-2" @click="onEditItem(item)">
-                        mdi-pencil
-                    </v-icon>
-                    <v-icon small color="danger" @click="onDeleteItem(item)">
-                        mdi-delete
-                    </v-icon>
-                </template>
-            </v-data-table>
-        </v-card-text>
-    </v-card>
+                <v-col cols="12" sm="6" md="3">
+                    <v-btn type="submit" class="btn-filter-form" color="primary" block>
+                        <v-icon left dark>mdi-magnify</v-icon>
+                        Pesquisar
+                    </v-btn>
+                </v-col>
+            </v-row>
+        </v-form>
+
+        <v-card flat>
+            <v-card-title class="primary white--text title">
+                RELATÓRIO DE HORAS
+
+                <v-spacer></v-spacer>
+
+                <v-btn class="secondary" text @click="onAddTime()">
+                    Registrar Agora
+                </v-btn>
+            </v-card-title>
+
+            <v-card-text>
+                <v-data-table
+                :headers="headers"
+                :items="reports"
+                sort-by="dateFormatted"
+                class="elevation-1"
+                locale="pt-BR"
+                :custom-sort="sortByDate"
+                sort-desc
+                must-sort
+                >
+                    <template v-slot:item.workedTime="{ item }">
+                        <v-chip color="info" class="text-no-wrap" dark>
+                            {{ item.workedTime }}
+                        </v-chip>
+                    </template>
+                    <template v-slot:item.actions="{ item }">
+                        <v-icon small color="primary" class="mr-2" @click="onEditItem(item)">
+                            mdi-pencil
+                        </v-icon>
+                        <v-icon small color="danger" @click="onDeleteItem(item)">
+                            mdi-delete
+                        </v-icon>
+                    </template>
+                </v-data-table>
+            </v-card-text>
+        </v-card>
+    </div>
 </template>
 
 <script>
@@ -46,7 +119,13 @@ import API from '@/api/report'
 export default {
     name: 'ReportList',
     data: () => ({
-        reports: []
+        reports: [],
+        filter: {
+            dateFrom: '',
+            dateTo: ''
+        },
+        dateFromActivator: false,
+        dateToActivator: false
     }),
     computed: {
         ...mapGetters(['activeAccount']),
@@ -69,9 +148,21 @@ export default {
             headers.push({ text: 'Actions', value: 'actions', sortable: false })
 
             return headers
+        },
+        formattedDateFrom () {
+            return this.$options.filters.toBRDate(this.filter.dateFrom)
+        },
+        formattedDateTo () {
+            return this.$options.filters.toBRDate(this.filter.dateTo)
         }
     },
     async created () {
+        const fromDate = new Date()
+        fromDate.setDate(1)
+        fromDate.setMonth(fromDate.getMonth() - 1)
+
+        this.filter.dateFrom = this.$options.filters.toISODate(fromDate)
+        this.filter.dateTo = this.$options.filters.toISODate(new Date())
         await this.getReports()
     },
     methods: {
@@ -79,7 +170,7 @@ export default {
         async getReports () {
             this.setLoading(true)
 
-            await API.list(this.activeAccount.id)
+            await API.list(this.activeAccount.id, this.filter)
                 .then(({ data }) => {
                     const reportsResponse = data.data.reports
                     const errors = data.errors

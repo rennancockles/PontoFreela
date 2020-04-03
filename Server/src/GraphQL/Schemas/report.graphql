@@ -1,6 +1,6 @@
 type Query {
     report(id: ID): Report
-    reports(accountId: ID): [Report]
+    reports(accountId: ID, filter: ReportFilter): [Report]
 }
 
 type Mutation {
@@ -25,4 +25,9 @@ input ReportInput {
     date: Date!
     obs: String
     records: [RecordInput!]!
+}
+
+input ReportFilter {
+    dateFrom: Date
+    dateTo: Date
 }
