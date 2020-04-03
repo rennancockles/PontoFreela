@@ -1,31 +1,21 @@
 <template>
     <v-navigation-drawer fixed clipped app>
         <v-list>
-            <v-list-group
-            v-for="item in items"
-            :key="item.key"
-            :prepend-icon="item.icon"
-            :append-icon="null"
-            no-action
-            v-model="item.active"
-            >
-                <template v-slot:activator>
+            <v-list-item-group color="primary">
+                <v-list-item
+                v-for="(item, i) in items"
+                :key="i"
+                router
+                :to="item.to"
+                >
+                    <v-list-item-icon>
+                        <v-icon v-text="item.icon"></v-icon>
+                    </v-list-item-icon>
                     <v-list-item-content>
                         <v-list-item-title v-text="item.title"></v-list-item-title>
                     </v-list-item-content>
-                </template>
-
-                <v-list-item
-                v-for="subItem in item.subitems"
-                :key="subItem.key"
-                router
-                :to="subItem.to"
-                >
-                    <v-list-item-content>
-                        <v-list-item-title v-text="subItem.title"></v-list-item-title>
-                    </v-list-item-content>
                 </v-list-item>
-            </v-list-group>
+            </v-list-item-group>
 
             <v-divider></v-divider>
 
