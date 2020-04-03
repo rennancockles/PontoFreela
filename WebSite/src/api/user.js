@@ -25,5 +25,21 @@ export default {
                 }
             }
         })
+    },
+
+    changePassword: ({ password, currentPassword }) => {
+        return $http.post('', {
+            query: `
+                mutation ($updatePasswordInput: UpdatePasswordInput!) {
+                    updatePassword (updatePasswordInput: $updatePasswordInput)
+                }
+            `,
+            variables: {
+                updatePasswordInput: {
+                    password,
+                    currentPassword
+                }
+            }
+        })
     }
 }

@@ -6,7 +6,8 @@ export const resolver = {
         user: (_, args, { userId }) => userBusiness.findById(userId)
     },
     Mutation: {
-        updateUser: (_, { user }, { userId }) => userBusiness.update(user, userId)
+        updateUser: (_, { user }, { userId }) => userBusiness.update(user, userId),
+        updatePassword: (_, { updatePasswordInput }, { userId }) => userBusiness.updatePassword(updatePasswordInput, userId)
     },
     User: {
         accounts: async (parent, { onlyActive }) => {

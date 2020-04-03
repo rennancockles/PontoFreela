@@ -4,6 +4,7 @@ type Query {
 
 type Mutation {
     updateUser(user: UserInput!): User
+    updatePassword(updatePasswordInput: UpdatePasswordInput!): Boolean
 }
 
 type User {
@@ -22,4 +23,9 @@ input UserInput {
     email: String!
     birth: Date!
     company: String
+}
+
+input UpdatePasswordInput {
+    currentPassword: String!
+    password: String!
 }
