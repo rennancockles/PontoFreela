@@ -22,11 +22,15 @@ function getRecoverToken (email) {
     return encryption.encrypt(JSON.stringify(obj))
 }
 
-function validateRecoverToken (token) {
+function validateRecoverToken (token, userEmail) {
     const decrypted = encryption.decrypt(token)
     const obj = JSON.parse(decrypted)
 
-    if (obj.action === 'recover' || moment().diff(moment.unix(obj.createdAt), 'hours') <= obj.validHours) return true
+    const isValidEmail = obj.email === userEmail
+    const isValidAction = obj.action === 'recover'
+    const isValidHours = moment().diff(moment.unix(obj.createdAt), 'hours') <= obj.validHours
+
+    if (isValidEmail && isValidAction && isValidHours) return true
     else return false
 }
 
@@ -61,9 +65,22 @@ export default {
             const fullName = `${name} ${lastname}`
 
             const token = getRecoverToken(user.email)
-            const url = `${process.env.CLIENT_URL}/auth/recover?token=${token}`
+            const url = `${process.env.CLIENT_URL}/auth/recover/${token}`
 
             recoverEmail.send(user.email, fullName, url)
+        }
+
+        return ''
+    },
+
+    recoverPassword: async ({ token, email, password }) => {
+        const user = await userDAO.findByEmail(email)
+
+        if (user && validateRecoverToken(token, email)) {
+            const passwordHash = await bcrypt.hash(password, 10)
+            userDAO.updatePassword(passwordHash, user.id)
+        } else {
+            throw new Error('Token inválido!')
         }
 
         return ''

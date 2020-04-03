@@ -5,6 +5,7 @@ type Query {
 
 type Mutation {
     register(user: AuthInput!): AuthResponse
+    recover(recoverInput: RecoverInput!): String
 }
 
 type AuthResponse {
@@ -19,4 +20,10 @@ input AuthInput {
     password: String!
     birth: Date!
     company: String
+}
+
+input RecoverInput {
+    token: String!
+    email: String!
+    password: String!
 }

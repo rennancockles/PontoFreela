@@ -65,9 +65,10 @@ export default {
         this.setIsLoggedIn(this.$auth.isLoggedIn())
         if (this.isLoggedIn) {
             this.setUser(this.$auth.getUser())
-        } else {
-            this.redirectLogin()
         }
+        // else {
+        //     this.redirectLogin()
+        // }
     }
 }
 </script>

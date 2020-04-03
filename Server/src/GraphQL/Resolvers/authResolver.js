@@ -6,6 +6,7 @@ export const resolver = {
         recoverEmail: (_, { email }) => authBusiness.sendRecoverEmail(email)
     },
     Mutation: {
-        register: (_, { user }) => authBusiness.register(user)
+        register: (_, { user }) => authBusiness.register(user),
+        recover: (_, { recoverInput }) => authBusiness.recoverPassword(recoverInput)
     }
 }

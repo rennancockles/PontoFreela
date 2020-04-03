@@ -104,5 +104,22 @@ export default {
                 email
             }
         })
+    },
+
+    recover: ({ email, password, token }) => {
+        return $http.post('', {
+            query: `
+                mutation ($recoverInput: RecoverInput!) {
+                    recover (recoverInput: $recoverInput)
+                }
+            `,
+            variables: {
+                recoverInput: {
+                    token,
+                    email,
+                    password
+                }
+            }
+        })
     }
 }

@@ -95,6 +95,31 @@ export default {
         })
     },
     
+    updatePassword: (passwordHash, userId) => {
+        return new Promise((resolve, reject) => {
+            pool.getConnection((err, connection) => {
+                if (err) throw err;
+
+                const query = mysql.format('UPDATE users SET password = ? WHERE id = ?;', [
+                    passwordHash,
+                    userId
+                ])
+
+                connection.query(query, (err, result) => {
+                    if (err) throw err
+
+                    if (result) {
+                        resolve(result.affectedRows > 0)
+                    } else {
+                        reject(new Error("Error updating password!"))
+                    }
+
+                    connection.release();
+                })
+            })
+        })
+    },
+    
     create: (user) => {
         return new Promise((resolve, reject) => {
             pool.getConnection((err, connection) => {
