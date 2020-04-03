@@ -80,6 +80,9 @@
                 <v-btn class="secondary" text @click="onAddTime()">
                     Registrar Agora
                 </v-btn>
+                <v-btn class="warning ml-2" text dark @click="onCreateClosing()">
+                    Criar Fechamento
+                </v-btn>
             </v-card-title>
 
             <v-card-text>
@@ -93,6 +96,11 @@
                 sort-desc
                 must-sort
                 >
+                    <template v-slot:item.closing="{ item }">
+                        <v-icon v-if="item.closingId" color="primary" >
+                            mdi-lock
+                        </v-icon>
+                    </template>
                     <template v-slot:item.workedTime="{ item }">
                         <v-chip color="info" class="text-no-wrap" dark>
                             {{ item.workedTime }}
@@ -115,6 +123,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import API from '@/api/report'
+import closingAPI from '@/api/closing'
 
 export default {
     name: 'ReportList',
@@ -132,7 +141,7 @@ export default {
         headers () {
             if (this.reports.length === 0) return []
 
-            const headers = [{ text: 'Data', value: 'dateFormatted' }]
+            const headers = [{ text: '', value: 'closing', sortable: false }, { text: 'Data', value: 'dateFormatted' }]
             let maxRecordLength = Math.max(...this.reports.map(r => r.records.length))
             maxRecordLength = maxRecordLength % 2 === 0 ? maxRecordLength : maxRecordLength + 1
 
@@ -145,7 +154,7 @@ export default {
             }
 
             headers.push({ text: 'Total', value: 'workedTime', sortable: false })
-            headers.push({ text: 'Actions', value: 'actions', sortable: false })
+            headers.push({ text: 'Ações', value: 'actions', sortable: false })
 
             return headers
         },
@@ -213,6 +222,25 @@ export default {
             this.setLoading(true)
 
             await API.delete({ ...item, accountId: this.activeAccount.id })
+                .then(async ({ data }) => {
+                    const reportsResponse = data.data.reports
+                    const errors = data.errors
+
+                    if (errors && errors.length > 0) {
+                        this.$throwException(errors[0])
+                    } else {
+                        this.setReports(reportsResponse)
+                    }
+
+                    await this.getReports()
+                    this.setLoading(false)
+                })
+                .catch(this.$throwException)
+        },
+        onCreateClosing () {
+            this.setLoading(true)
+
+            closingAPI.create({ ...this.filter, accountId: this.activeAccount.id })
                 .then(async ({ data }) => {
                     const reportsResponse = data.data.reports
                     const errors = data.errors

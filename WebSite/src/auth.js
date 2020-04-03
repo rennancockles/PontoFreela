@@ -50,5 +50,12 @@ export default {
             _accounts = this.getItem('accounts')
         }
         return _accounts
+    },
+    setAccounts (accounts) {
+        const user = this.getUser()
+        user.accounts = accounts
+        _user = {}
+
+        this.setItem('user', user)
     }
 }

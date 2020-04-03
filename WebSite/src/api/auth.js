@@ -26,6 +26,7 @@ export default {
                                     obs
                                     workedMS
                                     workedTime
+                                    closingId
                                     records {
                                         id
                                         time
@@ -69,6 +70,7 @@ export default {
                                     obs
                                     workedMS
                                     workedTime
+                                    closingId
                                     records {
                                         id
                                         time

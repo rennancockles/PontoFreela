@@ -2,13 +2,13 @@ import mysql from 'mysql'
 import pool from './db'
 
 export default {    
-    listByAccountId: (accountId, { dateFrom, dateTo }) => {
+    listByAccountId: (accountId, filter) => {
         return new Promise((resolve, reject) => {
             pool.getConnection((err, connection) => {
                 if (err) throw err
 
                 let query = mysql.format('SELECT *, DATE_FORMAT(date, "%d/%m/%Y") dateFormatted FROM reports WHERE accountId = ?', [accountId])
-                const queryWhere = (dateFrom && dateTo) ? mysql.format('AND date BETWEEN ? AND ?', [dateFrom, dateTo]) : '' 
+                const queryWhere = (filter && filter.dateFrom && filter.dateTo) ? mysql.format('AND date BETWEEN ? AND ?', [filter.dateFrom, filter.dateTo]) : '' 
                 query += ` ${queryWhere} ORDER BY date;`
                 
                 connection.query(query, (err, result) => {

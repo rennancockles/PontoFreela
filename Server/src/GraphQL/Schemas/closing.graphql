@@ -1,0 +1,9 @@
+type Mutation {
+    createClosing(closingInput: ClosingInput!): [Report]
+}
+
+input ClosingInput {
+    accountId: ID!
+    dateFrom: Date!
+    dateTo: Date!
+}

@@ -93,7 +93,7 @@ export default {
 
                     if (accountResponse && accountResponse.id) {
                         this.updateAccounts(accountResponse)
-                        this.$auth.setItem('accounts', this.accounts)
+                        this.$auth.setAccounts(this.accounts)
                     }
 
                     this.setLoading(false)
@@ -122,7 +122,7 @@ export default {
 
                     if (accountsResponse && accountsResponse.length > 0) {
                         this.setAccounts(accountsResponse)
-                        this.$auth.setItem('accounts', accountsResponse)
+                        this.$auth.setAccounts(accountsResponse)
                     }
 
                     this.payload = accountsResponse.map(acc => ({ ...acc, originalName: acc.name }))

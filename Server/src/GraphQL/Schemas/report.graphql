@@ -11,6 +11,7 @@ type Mutation {
 
 type Report {
     id: ID!
+    closingId: ID
     date: Date!
     dateFormatted: String
     obs: String

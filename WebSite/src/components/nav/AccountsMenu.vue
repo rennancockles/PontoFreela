@@ -51,7 +51,7 @@ export default {
 
                     if (accountResponse && accountResponse.id) {
                         this.changeActive(accountResponse)
-                        this.$auth.setItem('accounts', this.accounts)
+                        this.$auth.setAccounts(this.accounts)
                     }
 
                     this.setLoading(false)

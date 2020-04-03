@@ -20,14 +20,20 @@ const getters = {
     // SUMMARY
     time (_, _getters) {
         const activeAccount = _getters.activeAccount
-        const totalDiff = activeAccount.reports.map(rep => rep.workedMS).reduce((acc, curr) => acc + curr)
+        const totalDiff = activeAccount.reports
+            .filter(rep => !rep.closingId)
+            .map(rep => rep.workedMS)
+            .reduce((acc, curr) => acc + curr, 0)
 
         return Vue.prototype.$moment.utc(totalDiff).format('HH:mm') || '00:00'
     },
     money (_, _getters) {
         const activeAccount = _getters.activeAccount
         const hourlyRate = parseFloat(activeAccount.hourlyRate || '0')
-        const totalDiff = activeAccount.reports.map(rep => rep.workedMS).reduce((acc, curr) => acc + curr)
+        const totalDiff = activeAccount.reports
+            .filter(rep => !rep.closingId)
+            .map(rep => rep.workedMS)
+            .reduce((acc, curr) => acc + curr, 0)
         const totalMoney = hourlyRate * totalDiff / (1000 * 60 * 60)
 
         return totalMoney
