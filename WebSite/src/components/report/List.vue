@@ -17,6 +17,7 @@
             sort-by="dateFormatted"
             class="elevation-1"
             locale="pt-BR"
+            :custom-sort="sortByDate"
             sort-desc
             must-sort
             >
@@ -33,9 +34,6 @@
                         mdi-delete
                     </v-icon>
                 </template>
-                <!-- <template v-slot:no-data>
-                    <v-btn color="primary" @click="initialize">Reset</v-btn>
-                </template> -->
             </v-data-table>
         </v-card-text>
     </v-card>
@@ -138,6 +136,15 @@ export default {
                     this.setLoading(false)
                 })
                 .catch(this.$throwException)
+        },
+        sortByDate (items, sortBy, sortDesc) {
+            const sortDirection = sortDesc[0] ? 1 : -1
+
+            return items.sort((a, b) => {
+                const dateA = new Date(a.date)
+                const dateB = new Date(b.date)
+                return dateA > dateB ? -1 * sortDirection : dateA < dateB ? 1 * sortDirection : 0
+            })
         }
     }
 }
