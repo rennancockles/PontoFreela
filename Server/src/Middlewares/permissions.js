@@ -4,7 +4,8 @@ export default {
     Query: {
         user: authRequired,
         report: authRequired,
-        reports: authRequired
+        reports: authRequired,
+        closings: authRequired
     },
     Mutation: {
         updateUser: authRequired,

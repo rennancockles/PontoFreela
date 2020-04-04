@@ -15,6 +15,6 @@ export default [
         key: 'Closures',
         title: 'Fechamentos',
         icon: 'mdi-archive-outline',
-        to: '/'
+        to: { name: 'closing.list' }
     }
 ]

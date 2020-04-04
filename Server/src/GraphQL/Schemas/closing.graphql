@@ -1,5 +1,17 @@
+type Query {
+    closings(accountId: ID!): [Closing]
+}
+
 type Mutation {
     createClosing(closingInput: ClosingInput!): [Report]
+}
+
+type Closing {
+    id: ID!
+    fromDate: Date!
+    fromDateFormatted: String
+    toDate: Date!
+    toDateFormatted: String
 }
 
 input ClosingInput {

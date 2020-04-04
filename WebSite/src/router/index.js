@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import BeforeRouter from './BeforeRouter.js'
 
 import authRoutes from './auth'
+import closingRoutes from './closing'
 import configRoutes from './config'
 import reportRoutes from './report'
 
@@ -19,6 +20,7 @@ const routes = [
         redirect: { name: 'report.list' }
     },
     ...authRoutes,
+    ...closingRoutes,
     ...configRoutes,
     ...reportRoutes
 ]

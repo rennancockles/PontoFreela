@@ -1,7 +1,35 @@
 import mysql from 'mysql'
 import pool from './db'
 
-export default {    
+export default {     
+    list: (accountId, userId) => {
+        return new Promise((resolve, reject) => {
+            pool.getConnection((err, connection) => {
+                if (err) throw err
+
+                let query = mysql.format(`SELECT *, 
+                DATE_FORMAT(fromDate, "%d/%m/%Y") fromDateFormatted, 
+                DATE_FORMAT(toDate, "%d/%m/%Y") toDateFormatted 
+                FROM closings c
+                INNER JOIN accounts a ON a.id = c.accountId
+                WHERE userId = ? AND accountId = ?
+                ORDER BY fromDate;`, [userId, accountId])
+                
+                connection.query(query, (err, result) => {
+                    if (err) throw err
+                    
+                    if (result) {
+                        resolve(result)
+                    } else {
+                        reject(new Error("Error listing closings!"))
+                    }
+
+                    connection.release()
+                })
+            })
+        })
+    },
+
     create: (closingInput) => {
         return new Promise((resolve, reject) => {
             pool.getConnection((err, connection) => {
