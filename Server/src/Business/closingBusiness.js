@@ -9,5 +9,12 @@ export default {
         closingDAO.apply(closingInput, closingId)
         
         return reportBusiness.listByAccountId(closingInput.accountId, closingInput)
+    },
+
+    delete: async (closingId, accountId, userId) => {
+        await closingDAO.unapply(closingId)
+        await closingDAO.delete(closingId)
+        
+        return closingDAO.list(accountId, userId)
     }
 }

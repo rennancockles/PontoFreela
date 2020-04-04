@@ -5,6 +5,7 @@ export const resolver = {
         closings: (_, { accountId }, { userId }) => closingBusiness.list(accountId, userId)
     },
     Mutation: {
-        createClosing: (_, { closingInput }) => closingBusiness.create(closingInput)
+        createClosing: (_, { closingInput }) => closingBusiness.create(closingInput),
+        deleteClosing: (_, { closingId, accountId }, { userId }) => closingBusiness.delete(closingId, accountId, userId)
     }
 }

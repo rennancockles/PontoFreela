@@ -16,6 +16,7 @@ export default {
         addNow: authRequired,
         upsertReport: authRequired,
         deleteReport: authRequired,
-        createClosing: authRequired
+        createClosing: authRequired,
+        deleteClosing: authRequired
     }
 }

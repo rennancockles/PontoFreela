@@ -20,6 +20,26 @@ export default {
         })
     },
 
+    delete: (closingId, accountId) => {
+        return $http.post('', {
+            query: `
+                mutation ($closingId: ID!, $accountId: ID!) {
+                    closings: deleteClosing (closingId: $closingId, accountId: $accountId) {
+                        id
+                        fromDate
+                        fromDateFormatted
+                        toDate
+                        toDateFormatted
+                    }
+                }
+            `,
+            variables: {
+                closingId,
+                accountId
+            }
+        })
+    },
+
     create: ({ dateFrom, dateTo, accountId }) => {
         return $http.post('', {
             query: `

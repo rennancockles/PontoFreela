@@ -15,6 +15,11 @@
             sort-desc
             must-sort
             >
+                <template v-slot:item.actions="{ item }">
+                    <v-icon small color="danger" @click="onDeleteClosing(item)">
+                        mdi-delete
+                    </v-icon>
+                </template>
             </v-data-table>
         </v-card-text>
     </v-card>
@@ -54,7 +59,24 @@ export default {
                         this.$throwException(errors[0])
                     } else {
                         this.closings = closingsResponse
-                        console.log(closingsResponse)
+                    }
+
+                    this.setLoading(false)
+                })
+                .catch(this.$throwException)
+        },
+        async onDeleteClosing (item) {
+            this.setLoading(true)
+
+            await API.delete(item.id, this.activeAccount.id)
+                .then(async ({ data }) => {
+                    const closingsResponse = data.data.closings
+                    const errors = data.errors
+
+                    if (errors && errors.length > 0) {
+                        this.$throwException(errors[0])
+                    } else {
+                        this.closings = closingsResponse
                     }
 
                     this.setLoading(false)

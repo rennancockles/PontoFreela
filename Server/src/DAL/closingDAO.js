@@ -7,7 +7,7 @@ export default {
             pool.getConnection((err, connection) => {
                 if (err) throw err
 
-                let query = mysql.format(`SELECT *, 
+                let query = mysql.format(`SELECT c.*, 
                 DATE_FORMAT(fromDate, "%d/%m/%Y") fromDateFormatted, 
                 DATE_FORMAT(toDate, "%d/%m/%Y") toDateFormatted 
                 FROM closings c
@@ -76,6 +76,50 @@ export default {
                         resolve(result.affectedRows > 0)
                     } else {
                         reject(new Error("Error applying closings!"))
+                    }
+
+                    connection.release();
+                })
+            })
+        })
+    },
+       
+    unapply: (closingId) => {
+        return new Promise((resolve, reject) => {
+            pool.getConnection((err, connection) => {
+                if (err) throw err;
+
+                const query = mysql.format('UPDATE reports SET closingId = NULL WHERE closingId = ?;', [closingId])
+
+                connection.query(query, (err, result) => {
+                    if (err) throw err
+
+                    if (result) {
+                        resolve(result.affectedRows > 0)
+                    } else {
+                        reject(new Error("Error unapplying closings!"))
+                    }
+
+                    connection.release();
+                })
+            })
+        })
+    },
+    
+    delete: (closingId) => {
+        return new Promise((resolve, reject) => {
+            pool.getConnection((err, connection) => {
+                if (err) throw err;
+
+                const query = mysql.format('DELETE FROM closings WHERE id = ?;', [closingId])
+
+                connection.query(query, (err, result) => {
+                    if (err) throw err
+
+                    if (result) {
+                        resolve(result.affectedRows > 0)
+                    } else {
+                        reject(new Error("Error deleting closing!"))
                     }
 
                     connection.release();
