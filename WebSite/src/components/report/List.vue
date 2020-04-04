@@ -80,7 +80,7 @@
                 <v-btn class="secondary" text @click="onAddTime()">
                     Registrar Agora
                 </v-btn>
-                <v-btn class="warning ml-2" text dark @click="onCreateClosing()">
+                <v-btn class="warning ml-2" text dark @click="onCreateClosing()" :disabled="allReportsClosed">
                     Criar Fechamento
                 </v-btn>
             </v-card-title>
@@ -102,7 +102,7 @@
                         </v-icon>
                     </template>
                     <template v-slot:item.workedTime="{ item }">
-                        <v-chip color="info" class="text-no-wrap" dark>
+                        <v-chip :color="item.closingId ? 'disabled' : 'info'" class="text-no-wrap" dark>
                             {{ item.workedTime }}
                         </v-chip>
                     </template>
@@ -163,6 +163,9 @@ export default {
         },
         formattedDateTo () {
             return this.$options.filters.toBRDate(this.filter.dateTo)
+        },
+        allReportsClosed () {
+            return this.reports.filter(rep => !rep.closingId).length === 0
         }
     },
     async created () {
