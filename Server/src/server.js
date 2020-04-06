@@ -12,6 +12,6 @@ const server = new GraphQLServer({
     middlewares: [permissions]
 })
 
-server.start(({ port }) => {
+server.start({ playground: false }, ({ port }) => {
     console.log(`Server is running on http://localhost:${port}`)
 })

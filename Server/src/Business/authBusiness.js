@@ -8,7 +8,7 @@ import encryption from '../Encryption'
 
 function getJwtToken ({ id }) {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
-        expiresIn: '3h'
+        expiresIn: '24h'
     })
 }
 
