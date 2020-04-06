@@ -78,7 +78,7 @@ export default {
                 .then(({ data }) => {
                     this.logIn(data.data.login)
                     this.setLoading(false)
-                    this.$goHome()
+                    this.$router.go()
                 })
                 .catch(this.$throwException)
         },
