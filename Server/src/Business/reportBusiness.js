@@ -1,6 +1,7 @@
 import moment from 'moment'
 import recordBusiness from '../Business/recordBusiness'
 import reportDAO from '../DAL/reportDAO'
+import excel from '../Excel'
 
 function validateRecords(records) {
     records[records.length - 1].time = records[records.length - 1].time === '00:00' ? '24:00' : records[records.length - 1].time
@@ -130,5 +131,22 @@ export default {
         
         if (success) return exports.default.listByAccountId(accountId)
         else return null
+    },
+
+    generateReport: async (closingId, accountId, userId) => {
+        const reportData = await reportDAO.getReportData(closingId, accountId, userId)
+        reportData.reports = await reportDAO.listByClosingId(accountId, closingId)
+        
+        for (let i = 0; i< reportData.reports.length; i++) {
+            const report = reportData.reports[i]
+            report.records = await recordBusiness.listByReportId(report.id)
+            setWorkedTime(report)
+        }
+        
+        const maxRecordLength = Math.max(...reportData.reports.map(r => r.records.length))
+        reportData.maxRecordLength = maxRecordLength % 2 === 0 ? maxRecordLength : maxRecordLength + 1
+        reportData.columnsLength = reportData.maxRecordLength + 2       
+        
+        return excel.generateFile(reportData)
     }
 }

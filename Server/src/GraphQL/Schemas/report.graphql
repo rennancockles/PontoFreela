@@ -1,6 +1,7 @@
 type Query {
     report(id: ID): Report
     reports(accountId: ID, filter: ReportFilter): [Report]
+    downloadReport(closingId: ID!, accountId: ID!): Boolean
 }
 
 type Mutation {

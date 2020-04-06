@@ -19,6 +19,9 @@
                     <v-icon small color="danger" @click="onDeleteClosing(item)">
                         mdi-delete
                     </v-icon>
+                    <v-icon small color="primary" class="ml-1" @click="onDownloadReport(item)">
+                        mdi-download
+                    </v-icon>
                 </template>
             </v-data-table>
         </v-card-text>
@@ -77,6 +80,21 @@ export default {
                         this.$throwException(errors[0])
                     } else {
                         this.closings = closingsResponse
+                    }
+
+                    this.setLoading(false)
+                })
+                .catch(this.$throwException)
+        },
+        onDownloadReport (item) {
+            this.setLoading(true)
+
+            API.downloadReport(item.id, this.activeAccount.id)
+                .then(async ({ data }) => {
+                    const errors = data.errors
+
+                    if (errors && errors.length > 0) {
+                        this.$throwException(errors[0])
                     }
 
                     this.setLoading(false)

@@ -68,5 +68,19 @@ export default {
                 }
             }
         })
+    },
+
+    downloadReport: (closingId, accountId) => {
+        return $http.post('', {
+            query: `
+                query ($closingId: ID!, $accountId: ID!) {
+                    downloadReport (closingId: $closingId, accountId: $accountId)
+                }
+            `,
+            variables: {
+                closingId,
+                accountId
+            }
+        })
     }
 }

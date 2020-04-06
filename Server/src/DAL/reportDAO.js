@@ -1,7 +1,7 @@
 import mysql from 'mysql'
 import pool from './db'
 
-export default {    
+export default {
     listByAccountId: (accountId, filter) => {
         return new Promise((resolve, reject) => {
             pool.getConnection((err, connection) => {
@@ -10,6 +10,31 @@ export default {
                 let query = mysql.format('SELECT *, DATE_FORMAT(date, "%d/%m/%Y") dateFormatted FROM reports WHERE accountId = ?', [accountId])
                 const queryWhere = (filter && filter.dateFrom && filter.dateTo) ? mysql.format('AND date BETWEEN ? AND ?', [filter.dateFrom, filter.dateTo]) : '' 
                 query += ` ${queryWhere} ORDER BY date;`
+                
+                connection.query(query, (err, result) => {
+                    if (err) throw err
+                    
+                    if (result) {
+                        resolve(result)
+                    } else {
+                        reject(new Error("Error getting reports of account!"))
+                    }
+
+                    connection.release()
+                })
+            })
+        })
+    },    
+
+    listByClosingId: (accountId, closingId) => {
+        return new Promise((resolve, reject) => {
+            pool.getConnection((err, connection) => {
+                if (err) throw err
+
+                let query = mysql.format(`SELECT *, DATE_FORMAT(date, "%d/%m/%Y") dateFormatted 
+                FROM reports 
+                WHERE accountId = ? AND closingId = ?
+                ORDER BY date;`, [accountId, closingId])
                 
                 connection.query(query, (err, result) => {
                     if (err) throw err
@@ -149,6 +174,33 @@ export default {
                     }
 
                     connection.release();
+                })
+            })
+        })
+    },
+
+    getReportData: (closingId, accountId, userId) => {
+        return new Promise((resolve, reject) => {
+            pool.getConnection((err, connection) => {
+                if (err) throw err
+
+                let query = mysql.format(`SELECT company, a.name, hourlyRate, 
+                    DATE_FORMAT(fromDate, "%d/%m/%Y") fromDate, DATE_FORMAT(toDate, "%d/%m/%Y") toDate
+                FROM users u
+                INNER JOIN accounts a on u.id = a.userId
+                INNER JOIN closings c on a.id = c.accountId
+                WHERE u.id = ? AND a.id = ? AND c.id = ?;`, [userId, accountId, closingId])
+
+                connection.query(query, (err, result) => {
+                    if (err) throw err
+                    
+                    if (result) {
+                        resolve(result[0])
+                    } else {
+                        reject(new Error("Error getting report data!"))
+                    }
+
+                    connection.release()
                 })
             })
         })

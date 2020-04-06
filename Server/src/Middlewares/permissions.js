@@ -5,7 +5,8 @@ export default {
         user: authRequired,
         report: authRequired,
         reports: authRequired,
-        closings: authRequired
+        closings: authRequired,
+        downloadReport: authRequired
     },
     Mutation: {
         updateUser: authRequired,
