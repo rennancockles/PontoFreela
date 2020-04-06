@@ -147,6 +147,8 @@ export default {
         reportData.maxRecordLength = maxRecordLength % 2 === 0 ? maxRecordLength : maxRecordLength + 1
         reportData.columnsLength = reportData.maxRecordLength + 2       
         
-        return excel.generateFile(reportData)
+        const excelFile = excel.generateFile(reportData)
+        const buffer = await excelFile.writeToBuffer()
+        return buffer.toString('base64')
     }
 }

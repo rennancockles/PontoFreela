@@ -92,6 +92,7 @@ export default {
             API.downloadReport(item.id, this.activeAccount.id)
                 .then(async ({ data }) => {
                     const errors = data.errors
+                    const base64 = data.data.report
 
                     if (errors && errors.length > 0) {
                         this.$throwException(errors[0])

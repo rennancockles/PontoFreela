@@ -74,7 +74,7 @@ export default {
         return $http.post('', {
             query: `
                 query ($closingId: ID!, $accountId: ID!) {
-                    downloadReport (closingId: $closingId, accountId: $accountId)
+                    report: downloadReport (closingId: $closingId, accountId: $accountId)
                 }
             `,
             variables: {
