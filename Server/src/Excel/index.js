@@ -138,6 +138,36 @@ function writeTableTotals (reportData) {
     .style({ alignment: { horizontal: 'center' }, fill: { fgColor: 'E2EFDA' }})
 }
 
+function writeSignature (reportData) {
+    const style = wb.createStyle({
+        font: { size: 10, bold: true }, 
+        alignment: { horizontal: 'center' },
+        fill: { type: 'pattern', fgColor: 'EDEDED', patternType: 'solid' },
+        border: {
+            left: {
+                style: 'medium',
+                color: '000000'
+            },
+            right: {
+                style: 'medium',
+                color: '000000'
+            },
+            top: {
+                style: 'medium',
+                color: '000000'
+            },
+            bottom: {
+                style: 'medium',
+                color: '000000'
+            }
+        }
+    })
+    const row = ws.rowCount + 1
+    const signature = 'Ponto Freela - pontofreela.r3ck.com.br'
+
+    ws.cell(row, 1, row, reportData.columnsLength, true).string(signature).style(style)
+}
+
 export default {
     generateFile: reportData => {
         wb = new xl.Workbook({ author: 'Ponto Freela' })
@@ -147,6 +177,7 @@ export default {
         writeTableHeader(reportData)
         writeTableData(reportData)
         writeTableTotals(reportData)
+        writeSignature(reportData)
 
         ws.setPrintArea(1, 1, ws.lastUsedRow, ws.lastUsedCol)
 

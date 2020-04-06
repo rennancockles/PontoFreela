@@ -96,6 +96,8 @@ export default {
 
                     if (errors && errors.length > 0) {
                         this.$throwException(errors[0])
+                    } else {
+                        this.downloadFile(base64)
                     }
 
                     this.setLoading(false)
@@ -110,6 +112,16 @@ export default {
                 const dateB = new Date(b.fromDate)
                 return dateA > dateB ? -1 * sortDirection : dateA < dateB ? 1 * sortDirection : 0
             })
+        },
+        downloadFile (base64) {
+            const contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            const linkSource = `data:${contentType};base64,${base64}`
+            const fileName = 'Report.xlsx'
+            const anchor = document.createElement('a')
+
+            anchor.href = linkSource
+            anchor.download = fileName
+            anchor.click()
         }
     }
 }
