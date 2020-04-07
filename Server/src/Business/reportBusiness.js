@@ -3,6 +3,14 @@ import recordBusiness from '../Business/recordBusiness'
 import reportDAO from '../DAL/reportDAO'
 import excel from '../Excel'
 
+function msToStringHour (ms) {
+    const hour = Math.floor(ms / 36e5)
+    const hourStr = (hour < 10 ? '0' : '') + hour
+    const minutes = Math.round(60 * ((ms / 36e5) % 1))
+    const minutesStr = (minutes < 10 ? '0' : '') + minutes
+    return `${hourStr}:${minutesStr}`
+}
+
 function validateRecords(records) {
     records[records.length - 1].time = records[records.length - 1].time === '00:00' ? '24:00' : records[records.length - 1].time
 
@@ -32,7 +40,7 @@ function setWorkedTime(report) {
     }
 
     report.workedMS = diff
-    report.workedTime = moment.utc(diff).format('HH:mm')
+    report.workedTime = msToStringHour(diff)
 }
 
 async function insert (reportInput) {
@@ -145,7 +153,11 @@ export default {
         
         const maxRecordLength = Math.max(...reportData.reports.map(r => r.records.length))
         reportData.maxRecordLength = maxRecordLength % 2 === 0 ? maxRecordLength : maxRecordLength + 1
-        reportData.columnsLength = reportData.maxRecordLength + 2       
+        reportData.columnsLength = reportData.maxRecordLength + 2      
+        
+        const totalWorkedTime = reportData.reports.map(rep => rep.workedMS).reduce((acc, cur) => acc + cur, 0)
+        reportData.totalValue = (reportData.hourlyRate * totalWorkedTime / (1000 * 60 * 60)).toFixed(2)
+        reportData.totalWorkedTime = msToStringHour(totalWorkedTime)
         
         const excelFile = excel.generateFile(reportData)
         const buffer = await excelFile.writeToBuffer()

@@ -1,5 +1,12 @@
-import Vue from 'vue'
 import Auth from '@/auth.js'
+
+function msToStringHour (ms) {
+    const hour = Math.round(ms / 36e5)
+    const hourStr = (hour < 10 ? '0' : '') + hour
+    const minutes = Math.round(60 * ((ms / 36e5) % 1))
+    const minutesStr = (minutes < 10 ? '0' : '') + minutes
+    return `${hourStr}:${minutesStr}`
+}
 
 const getters = {
     breadcrumbs (state) {
@@ -25,7 +32,7 @@ const getters = {
             .map(rep => rep.workedMS)
             .reduce((acc, curr) => acc + curr, 0)
 
-        return Vue.prototype.$moment.utc(totalDiff).format('HH:mm') || '00:00'
+        return msToStringHour(totalDiff)
     },
     money (_, _getters) {
         const activeAccount = _getters.activeAccount

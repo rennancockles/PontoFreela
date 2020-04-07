@@ -125,16 +125,13 @@ function writeTableTotals (reportData) {
         }
     })
     const row = ws.rowCount + 1
-    let totalWorkedTime = reportData.reports.map(rep => rep.workedMS).reduce((acc, cur) => acc + cur, 0)
-    const totalValue = (reportData.hourlyRate * totalWorkedTime / (1000 * 60 * 60)).toFixed(2)
-    totalWorkedTime = moment.utc(totalWorkedTime).format('HH:mm')
 
     ws.cell(row, 1, row, reportData.columnsLength - 1, true).string('Saldo de Horas').style(style)
-    ws.cell(row, reportData.columnsLength).string(totalWorkedTime).style(style)
+    ws.cell(row, reportData.columnsLength).string(reportData.totalWorkedTime).style(style)
     .style({ alignment: { horizontal: 'center' }, fill: { fgColor: 'E2EFDA' }})
 
     ws.cell(row + 1, 1, row + 1, reportData.columnsLength - 1, true).string('Total').style(style)
-    ws.cell(row + 1, reportData.columnsLength).string(totalValue).style(style)
+    ws.cell(row + 1, reportData.columnsLength).string(reportData.totalValue).style(style)
     .style({ alignment: { horizontal: 'center' }, fill: { fgColor: 'E2EFDA' }})
 }
 
