@@ -63,7 +63,7 @@
 
         <v-card-actions>
             <v-spacer />
-            <v-btn color="primary" @click="onSubmit()" :disabled="!frmValid || payload.records.length === 0">Criar registro</v-btn>
+            <v-btn color="primary" @click="onSubmit()" :disabled="!frmValid || payload.records.length === 0" v-text="btnSubmitLabel"></v-btn>
         </v-card-actions>
     </v-card>
 </template>
@@ -93,11 +93,15 @@ export default {
     },
     computed: {
         ...mapGetters(['report', 'activeAccount']),
+        btnSubmitLabel () {
+            return this.id ? 'Atualizar registro' : 'Criar registro'
+        },
         formattedDate () {
             return this.$options.filters.toBRDate(this.payload.date)
         }
     },
     created () {
+        this.clearReport()
         let date = this.$options.filters.toISODate(new Date())
 
         if (this.id) {
@@ -111,7 +115,7 @@ export default {
         if (this.payload.records.length === 0) this.onAddTime()
     },
     methods: {
-        ...mapActions(['addRecord', 'updateReports', 'setReport']),
+        ...mapActions(['addRecord', 'updateReports', 'setReport', 'clearReport']),
         onAddTime () {
             this.addRecord((new Date()).toLocaleTimeString().replace(/:\d\d$/, ''))
         },

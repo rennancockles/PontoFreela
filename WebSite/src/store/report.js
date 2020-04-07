@@ -19,6 +19,14 @@ export default {
         }
     },
     mutations: {
+        CLEAR_REPORT (store) {
+            store.report = {
+                id: null,
+                date: '',
+                obs: '',
+                records: []
+            }
+        },
         SET_REPORT (store, { id, date, obs, records }) {
             records.forEach(rec => { rec.time = rec.timeFormatted })
             store.report = { id, date, obs, records }
@@ -34,6 +42,9 @@ export default {
         }
     },
     actions: {
+        clearReport ({ commit }) {
+            commit('CLEAR_REPORT')
+        },
         setReport ({ commit }, payload) {
             commit('SET_REPORT', payload)
         },
