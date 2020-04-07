@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import reportStore from './report.js'
-import summaryStore from './summary.js'
 
 import state from './state'
 import getters from './getters'
@@ -17,7 +16,6 @@ export default new Vuex.Store({
     mutations,
     actions,
     modules: {
-        reportStore,
-        summaryStore
+        reportStore
     }
 })
