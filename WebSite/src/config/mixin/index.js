@@ -49,7 +49,7 @@ Vue.mixin({
                 this.$message(error, 'error')
             } else {
                 const { message } = error
-                console.log(message)
+
                 if (!message) {
                     this.$message('Error Internal Server', 'error')
                 } else {
