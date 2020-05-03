@@ -51,12 +51,13 @@ export default {
         })
     },
 
-    findTodayByAccountId: (accountId) => {
+    findLastNDayByAccountId: (accountId, n) => {
         return new Promise((resolve, reject) => {
             pool.getConnection((err, connection) => {
                 if (err) throw err;
             
-                const query = mysql.format('SELECT *, DATE_FORMAT(date, "%d/%m/%Y") dateFormatted FROM reports WHERE accountId = ? AND date = DATE(NOW());', [accountId])
+                const query = mysql.format(`SELECT *, DATE_FORMAT(date, "%d/%m/%Y") dateFormatted FROM reports 
+                    WHERE accountId = ? AND date = DATE(DATE_ADD(NOW(), INTERVAL -${n} DAY));`, [accountId])
                 
                 connection.query(query, (err, result) => {
                     if (err) throw err

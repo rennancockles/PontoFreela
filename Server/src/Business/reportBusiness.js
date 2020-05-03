@@ -79,6 +79,34 @@ async function update (reportInput) {
     return null
 }
 
+async function getAddNowReport (accountId, nPreviousDay, newRecord, validateOddRecords) {
+    if (nPreviousDay > 1) {
+        return { 
+            date: moment().format('YYYY-MM-DD'), 
+            dateFormatted: moment().format('DD/MM/YYYY'), 
+            obs: '', 
+            records: [newRecord]
+        } 
+    }
+
+    let report = await reportDAO.findLastNDayByAccountId(accountId, nPreviousDay)
+        
+    if (report && report.id > 0) {
+        report.records = await recordBusiness.listByReportId(report.id)
+
+        if (validateOddRecords && report.records.length % 2 === 0) {
+            return await getAddNowReport(accountId, nPreviousDay + 1, newRecord, !validateOddRecords)
+        }
+
+        newRecord.reportId = report.id
+        report.records.push(newRecord)
+
+        return report
+    } else {
+        return await getAddNowReport(accountId, nPreviousDay + 1, newRecord, !validateOddRecords)
+    }
+}
+
 export default {
     findById: async id => {
         const report = await reportDAO.findById(id)
@@ -104,17 +132,7 @@ export default {
 
     addNow: async accountId => {
         const newRecord = { time: moment().format('HH:mm:ss'), timeFormatted: moment().format('HH:mm') }
-        let report = await reportDAO.findTodayByAccountId(accountId)
-        
-        if (report && report.id > 0) {
-            newRecord.reportId = report.id
-
-            report.records = await recordBusiness.listByReportId(report.id)
-            report.records.push(newRecord)
-
-        } else {
-            report = { date: moment().format('YYYY-MM-DD'), dateFormatted: moment().format('DD/MM/YYYY'), obs: '', records: [newRecord]}
-        }
+        const report = await getAddNowReport(accountId, 0, newRecord, false)
 
         return exports.default.upsert({ accountId, ...report })
     },
