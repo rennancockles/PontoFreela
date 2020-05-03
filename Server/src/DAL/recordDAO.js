@@ -7,7 +7,7 @@ export default {
             pool.getConnection((err, connection) => {
                 if (err) throw err;
             
-                const query = mysql.format('SELECT *, TIME_FORMAT(time, "%H:%i") timeFormatted FROM records WHERE reportId = ? ORDER BY time;', [reportId])
+                const query = mysql.format('SELECT *, TIME_FORMAT(time, "%H:%i") timeFormatted FROM records WHERE reportId = ? ORDER BY id;', [reportId])
                 
                 connection.query(query, (err, result) => {
                     if (err) throw err

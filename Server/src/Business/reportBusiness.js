@@ -27,8 +27,9 @@ function getDiffTime(reportDate, initialRecord, finalRecord) {
     const finalTime = finalRecord ? finalRecord.time : isToday ? moment().format('HH:mm') : '24:00'
     const a = moment(finalTime, 'HH:mm')
     const b = moment(initialRecord.time, 'HH:mm')
+    let ms = a.diff(b)
 
-    return a.diff(b)
+    return ms > 0 ? ms : (ms + 864e5)
 }
 
 function setWorkedTime(report) {
@@ -119,9 +120,6 @@ export default {
     },
 
     upsert: reportInput => {
-        const horasValidas = validateRecords(reportInput.records)
-        if (!horasValidas) throw new Error("Horas inválidas!")
-
         if (!reportInput.id || reportInput.id == 0) {
             return insert(reportInput)
         } else {
