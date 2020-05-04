@@ -2,14 +2,7 @@ import moment from 'moment'
 import recordBusiness from '../Business/recordBusiness'
 import reportDAO from '../DAL/reportDAO'
 import excel from '../Excel'
-
-function msToStringHour (ms) {
-    const hour = Math.floor(ms / 36e5)
-    const hourStr = (hour < 10 ? '0' : '') + hour
-    const minutes = Math.round(60 * ((ms / 36e5) % 1))
-    const minutesStr = (minutes < 10 ? '0' : '') + minutes
-    return `${hourStr}:${minutesStr}`
-}
+import { msToStringHour } from '../Helpers/dateTimeHelper'
 
 function validateRecords(records) {
     records[records.length - 1].time = records[records.length - 1].time === '00:00' ? '24:00' : records[records.length - 1].time

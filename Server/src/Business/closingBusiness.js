@@ -1,14 +1,7 @@
 import accountBusiness from './accountBusiness'
 import reportBusiness from './reportBusiness'
 import closingDAO from '../DAL/closingDAO'
-
-function msToStringHour (ms) {
-    const hour = Math.floor(ms / 36e5)
-    const hourStr = (hour < 10 ? '0' : '') + hour
-    const minutes = Math.round(60 * ((ms / 36e5) % 1))
-    const minutesStr = (minutes < 10 ? '0' : '') + minutes
-    return `${hourStr}:${minutesStr}`
-}
+import { msToStringHour } from '../Helpers/dateTimeHelper'
 
 export default {
     list: (accountId, userId) => closingDAO.list(accountId, userId),
