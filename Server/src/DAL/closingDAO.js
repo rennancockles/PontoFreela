@@ -9,7 +9,8 @@ export default {
 
                 let query = mysql.format(`SELECT c.*, 
                 DATE_FORMAT(fromDate, "%d/%m/%Y") fromDateFormatted, 
-                DATE_FORMAT(toDate, "%d/%m/%Y") toDateFormatted 
+                DATE_FORMAT(toDate, "%d/%m/%Y") toDateFormatted,
+                DATE_FORMAT(createdAt, "%d/%m/%Y") createdAtFormatted  
                 FROM closings c
                 INNER JOIN accounts a ON a.id = c.accountId
                 WHERE userId = ? AND accountId = ?

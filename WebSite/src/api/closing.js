@@ -11,6 +11,8 @@ export default {
                         fromDateFormatted
                         toDate
                         toDateFormatted
+                        createdAt
+                        createdAtFormatted
                         totalMs
                         totalTime
                         totalValue
@@ -34,6 +36,8 @@ export default {
                         fromDateFormatted
                         toDate
                         toDateFormatted
+                        createdAt
+                        createdAtFormatted
                         totalMs
                         totalTime
                         totalValue

@@ -8,7 +8,7 @@
             <v-data-table
             :headers="headers"
             :items="closings"
-            sort-by="fromDateFormatted"
+            sort-by="createdAtFormatted"
             class="elevation-1"
             locale="pt-BR"
             :custom-sort="sortByDate"
@@ -46,6 +46,7 @@ export default {
     data: () => ({
         closings: [],
         headers: [
+            { text: 'Data de Criação', value: 'createdAtFormatted' },
             { text: 'Data Inicial', value: 'fromDateFormatted' },
             { text: 'Data Final', value: 'toDateFormatted', sortable: false },
             { text: 'Horas Trabalhadas', value: 'totalTime', sortable: false },
@@ -118,10 +119,11 @@ export default {
         },
         sortByDate (items, sortBy, sortDesc) {
             const sortDirection = sortDesc[0] ? 1 : -1
+            const sortColumn = sortBy[0].replace('Formatted', '')
 
             return items.sort((a, b) => {
-                const dateA = new Date(a.fromDate)
-                const dateB = new Date(b.fromDate)
+                const dateA = new Date(a[sortColumn])
+                const dateB = new Date(b[sortColumn])
                 return dateA > dateB ? -1 * sortDirection : dateA < dateB ? 1 * sortDirection : 0
             })
         },
