@@ -18,6 +18,7 @@ export default {
         upsertReport: authRequired,
         deleteReport: authRequired,
         createClosing: authRequired,
-        deleteClosing: authRequired
+        deleteClosing: authRequired,
+        changePaidStatus: authRequired
     }
 }

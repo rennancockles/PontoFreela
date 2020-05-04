@@ -131,5 +131,28 @@ export default {
                 })
             })
         })
+    },
+       
+    changePaidStatus: (closingId, accountId, paidStatus) => {
+        return new Promise((resolve, reject) => {
+            pool.getConnection((err, connection) => {
+                if (err) throw err;
+
+                const query = mysql.format('UPDATE closings SET isPaid = ? WHERE id = ? AND accountId = ?;', 
+                    [paidStatus, closingId, accountId])
+
+                connection.query(query, (err, result) => {
+                    if (err) throw err
+
+                    if (result) {
+                        resolve(result.affectedRows > 0)
+                    } else {
+                        reject(new Error("Error updating closing paid status!"))
+                    }
+
+                    connection.release();
+                })
+            })
+        })
     }
 }

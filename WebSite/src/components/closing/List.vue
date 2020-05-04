@@ -137,9 +137,23 @@ export default {
             anchor.download = fileName
             anchor.click()
         },
-        checkboxChange (item) {
-            item.isPaid = !item.isPaid
-            console.log(item)
+        async checkboxChange (item) {
+            this.setLoading(true)
+
+            await API.changePaidStatus(item.id, this.activeAccount.id, !item.isPaid)
+                .then(async ({ data }) => {
+                    const closingsResponse = data.data.closings
+                    const errors = data.errors
+
+                    if (errors && errors.length > 0) {
+                        this.$throwException(errors[0])
+                    } else {
+                        this.closings = closingsResponse
+                    }
+
+                    this.setLoading(false)
+                })
+                .catch(this.$throwException)
         }
     }
 }

@@ -6,6 +6,8 @@ export const resolver = {
     },
     Mutation: {
         createClosing: (_, { closingInput }) => closingBusiness.create(closingInput),
-        deleteClosing: (_, { closingId, accountId }, { userId }) => closingBusiness.delete(closingId, accountId, userId)
+        deleteClosing: (_, { closingId, accountId }, { userId }) => closingBusiness.delete(closingId, accountId, userId),
+        changePaidStatus: (_, { closingId, accountId, paidStatus }, { userId }) => 
+            closingBusiness.changePaidStatus(closingId, accountId, userId, paidStatus)
     }
 }

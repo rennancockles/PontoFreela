@@ -82,6 +82,33 @@ export default {
         })
     },
 
+    changePaidStatus: (closingId, accountId, paidStatus) => {
+        return $http.post('', {
+            query: `
+                mutation ($closingId: ID!, $accountId: ID!, $paidStatus: Boolean!) {
+                    closings: changePaidStatus (closingId: $closingId, accountId: $accountId, paidStatus: $paidStatus) {
+                        id
+                        fromDate
+                        fromDateFormatted
+                        toDate
+                        toDateFormatted
+                        createdAt
+                        createdAtFormatted
+                        totalMs
+                        totalTime
+                        totalValue
+                        isPaid
+                    }
+                }
+            `,
+            variables: {
+                closingId,
+                accountId,
+                paidStatus
+            }
+        })
+    },
+
     downloadReport: (closingId, accountId) => {
         return $http.post('', {
             query: `

@@ -26,5 +26,11 @@ export default {
         await closingDAO.delete(closingId)
         
         return closingDAO.list(accountId, userId)
+    },
+
+    changePaidStatus: async (closingId, accountId, userId, paidStatus) => {
+        await closingDAO.changePaidStatus(closingId, accountId, paidStatus)
+        
+        return closingDAO.list(accountId, userId)
     }
 }

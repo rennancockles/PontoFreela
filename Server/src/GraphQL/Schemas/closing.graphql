@@ -5,6 +5,7 @@ type Query {
 type Mutation {
     createClosing(closingInput: ClosingInput!): [Report]
     deleteClosing(closingId: ID!, accountId: ID!): [Closing]
+    changePaidStatus(closingId: ID!, accountId: ID!, paidStatus: Boolean!): [Closing]
 }
 
 type Closing {
