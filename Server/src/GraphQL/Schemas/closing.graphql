@@ -13,6 +13,10 @@ type Closing {
     fromDateFormatted: String
     toDate: Date!
     toDateFormatted: String
+    totalMs: Int
+    totalTime: String
+    totalValue: Float
+    isPaid: Boolean
 }
 
 input ClosingInput {

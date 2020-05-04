@@ -35,10 +35,14 @@ export default {
             pool.getConnection((err, connection) => {
                 if (err) throw err;
 
-                const query = mysql.format('INSERT INTO closings (fromDate, toDate, accountId) VALUES (?, ?, ?);', [
+                const query = mysql.format(`INSERT INTO closings (fromDate, toDate, accountId, totalMs, totalTime, totalValue) 
+                VALUES (?, ?, ?, ?, ?, ?);`, [
                     closingInput.dateFrom,
                     closingInput.dateTo,
-                    closingInput.accountId
+                    closingInput.accountId,
+                    closingInput.totalMs,
+                    closingInput.totalTime,
+                    closingInput.totalValue
                 ])
 
                 connection.query(query, (err, result) => {

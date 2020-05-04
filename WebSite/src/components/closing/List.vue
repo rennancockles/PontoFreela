@@ -15,6 +15,15 @@
             sort-desc
             must-sort
             >
+                <template v-slot:item.totalValue="{ item }">
+                    {{ item.totalValue | currency }}
+                </template>
+                <template v-slot:item.isPaid="{ item }">
+                    <v-checkbox
+                    v-model="item.isPaid"
+                    @click.stop="checkboxChange(item)"
+                    ></v-checkbox>
+                </template>
                 <template v-slot:item.actions="{ item }">
                     <v-icon small color="danger" @click="onDeleteClosing(item)">
                         mdi-delete
@@ -39,6 +48,9 @@ export default {
         headers: [
             { text: 'Data Inicial', value: 'fromDateFormatted' },
             { text: 'Data Final', value: 'toDateFormatted', sortable: false },
+            { text: 'Horas Trabalhadas', value: 'totalTime', sortable: false },
+            { text: 'Valor', value: 'totalValue', sortable: false },
+            { text: 'Pago', value: 'isPaid', sortable: false },
             { text: 'Ações', value: 'actions', sortable: false }
         ]
     }),
@@ -122,6 +134,10 @@ export default {
             anchor.href = linkSource
             anchor.download = fileName
             anchor.click()
+        },
+        checkboxChange (item) {
+            item.isPaid = !item.isPaid
+            console.log(item)
         }
     }
 }

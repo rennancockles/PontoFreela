@@ -2,6 +2,8 @@ import accountDAO from '../DAL/accountDAO'
 
 export default {
     listByUserId: userid => accountDAO.listByUserId(userid),
+    
+    findById: id => accountDAO.findById(id),
 
     upsert: async (account, userId) => {
         if (account.id) {

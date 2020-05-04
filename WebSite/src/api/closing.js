@@ -11,6 +11,10 @@ export default {
                         fromDateFormatted
                         toDate
                         toDateFormatted
+                        totalMs
+                        totalTime
+                        totalValue
+                        isPaid
                     }
                 }
             `,
@@ -30,6 +34,10 @@ export default {
                         fromDateFormatted
                         toDate
                         toDateFormatted
+                        totalMs
+                        totalTime
+                        totalValue
+                        isPaid
                     }
                 }
             `,
