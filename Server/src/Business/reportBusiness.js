@@ -22,7 +22,7 @@ function getDiffTime(reportDate, initialRecord, finalRecord) {
     const b = moment(initialRecord.time, 'HH:mm')
     let ms = a.diff(b)
 
-    return ms > 0 ? ms : (ms + 864e5)
+    return ms >= 0 ? ms : (ms + 864e5)
 }
 
 function setWorkedTime(report) {

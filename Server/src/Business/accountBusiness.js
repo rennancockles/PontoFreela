@@ -19,6 +19,7 @@ export default {
 
         if (id) {
             account.id = id
+            account.reports = []
             return account
         } else {
             return null

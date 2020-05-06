@@ -268,6 +268,14 @@ export default {
                 return dateA > dateB ? -1 * sortDirection : dateA < dateB ? 1 * sortDirection : 0
             })
         }
+    },
+    watch: {
+        activeAccount: {
+            deep: true,
+            async handler (newValue, oldValue) {
+                if (oldValue.id !== newValue.id) await this.getReports()
+            }
+        }
     }
 }
 </script>
