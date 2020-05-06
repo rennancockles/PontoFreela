@@ -6,8 +6,13 @@
             color="info"
             class="ma-2 white--text"
             >
-                {{ user.name }}
-                <v-icon right dark>mdi-chevron-down</v-icon>
+                <span class="hidden-xs-only">
+                    {{ user.name }}
+                    <v-icon right dark>mdi-chevron-down</v-icon>
+                </span>
+                <span class="hidden-sm-and-up">
+                    <v-icon dark>mdi-account</v-icon>
+                </span>
             </v-btn>
         </template>
 

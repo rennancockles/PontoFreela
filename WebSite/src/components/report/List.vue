@@ -77,12 +77,14 @@
 
                 <v-spacer></v-spacer>
 
-                <v-btn class="secondary" text @click="onAddTime()">
-                    Registrar Agora
-                </v-btn>
-                <v-btn class="warning ml-2" text dark @click="onCreateClosing()" :disabled="allReportsClosed">
-                    Criar Fechamento
-                </v-btn>
+                <div>
+                    <v-btn :small="$vuetify.breakpoint.xsOnly" class="secondary" text @click="onAddTime()">
+                        Registrar Agora
+                    </v-btn>
+                    <v-btn :small="$vuetify.breakpoint.xsOnly" class="warning ml-2" text dark @click="onCreateClosing()" :disabled="allReportsClosed">
+                        Criar Fechamento
+                    </v-btn>
+                </div>
             </v-card-title>
 
             <v-card-text>

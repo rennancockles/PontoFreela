@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer fixed clipped app>
+    <v-navigation-drawer fixed clipped v-model="showDrawer" :bottom="$vuetify.breakpoint.xsOnly" :temporary="$vuetify.breakpoint.smAndDown" :permanent="$vuetify.breakpoint.mdAndUp" app>
         <v-list>
             <v-list-item-group color="primary">
                 <v-list-item
@@ -30,12 +30,23 @@ import Items from './MenuItems'
 
 export default {
     name: 'Drawer',
+    props: ['show'],
     components: {
         DrawerSummary
     },
     data () {
         return {
             items: Items
+        }
+    },
+    computed: {
+        showDrawer: {
+            get () {
+                return this.show
+            },
+            set (val) {
+                this.$emit('change', val)
+            }
         }
     }
 }

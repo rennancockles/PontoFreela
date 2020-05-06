@@ -6,8 +6,13 @@
             color="secondary"
             class="ma-2 white--text"
             >
-                {{ activeAccount.name }}
-                <v-icon right dark>mdi-twitter-retweet</v-icon>
+                <span class="hidden-xs-only">
+                    {{ activeAccount.name }}
+                    <v-icon right dark>mdi-twitter-retweet</v-icon>
+                </span>
+                <span class="hidden-sm-and-up">
+                    <v-icon dark>mdi-badge-account-horizontal</v-icon>
+                </span>
             </v-btn>
         </template>
 
