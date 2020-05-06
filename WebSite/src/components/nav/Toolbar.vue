@@ -8,6 +8,10 @@
 
             <v-spacer></v-spacer>
 
+            <span>{{ activeAccount.name }}</span>
+
+            <v-spacer></v-spacer>
+
             <span>{{ money | currency }}</span>
         </v-system-bar>
 
@@ -47,7 +51,7 @@ export default {
         UserMenu
     },
     computed: {
-        ...mapGetters(['time', 'money']),
+        ...mapGetters(['time', 'money', 'activeAccount']),
         appTitle () {
             return `${process.env.VUE_APP_TITLE} ${process.env.VUE_APP_ENV_TITLE}`
         }
