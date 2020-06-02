@@ -8,6 +8,19 @@ function msToStringHour (ms) {
     return `${hourStr}:${minutesStr}`
 }
 
+function getTotalWorkedMs (reports) {
+    let totalWorkedMs = 0
+
+    if (reports) {
+        totalWorkedMs = reports
+            .filter(rep => !rep.closingId)
+            .map(rep => rep.workedMS)
+            .reduce((acc, curr) => acc + curr, 0)
+    }
+
+    return totalWorkedMs
+}
+
 const getters = {
     breadcrumbs (state) {
         return state.breadcrumbs
@@ -27,21 +40,15 @@ const getters = {
     // SUMMARY
     time (_, _getters) {
         const activeAccount = _getters.activeAccount
-        const totalDiff = activeAccount.reports
-            .filter(rep => !rep.closingId)
-            .map(rep => rep.workedMS)
-            .reduce((acc, curr) => acc + curr, 0)
+        const totalWorkedMs = getTotalWorkedMs(activeAccount.reports)
 
-        return msToStringHour(totalDiff)
+        return msToStringHour(totalWorkedMs)
     },
     money (_, _getters) {
         const activeAccount = _getters.activeAccount
         const hourlyRate = parseFloat(activeAccount.hourlyRate || '0')
-        const totalDiff = activeAccount.reports
-            .filter(rep => !rep.closingId)
-            .map(rep => rep.workedMS)
-            .reduce((acc, curr) => acc + curr, 0)
-        const totalMoney = hourlyRate * totalDiff / (1000 * 60 * 60)
+        const totalWorkedMs = getTotalWorkedMs(activeAccount.reports)
+        const totalMoney = hourlyRate * totalWorkedMs / (1000 * 60 * 60)
 
         return totalMoney
     },
