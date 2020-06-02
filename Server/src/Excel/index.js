@@ -131,8 +131,8 @@ function writeTableTotals (reportData) {
     .style({ alignment: { horizontal: 'center' }, fill: { fgColor: 'E2EFDA' }})
 
     ws.cell(row + 1, 1, row + 1, reportData.columnsLength - 1, true).string('Total').style(style)
-    ws.cell(row + 1, reportData.columnsLength).string(reportData.totalValue).style(style)
-    .style({ alignment: { horizontal: 'center' }, fill: { fgColor: 'E2EFDA' }})
+    ws.cell(row + 1, reportData.columnsLength).number(Number(reportData.totalValue)).style(style)
+    .style({ alignment: { horizontal: 'center' }, fill: { fgColor: 'E2EFDA' }, numberFormat: 'R$ #,##0.00;[Red]-R$ #,##0.00'})
 }
 
 function writeSignature (reportData) {
