@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import * as Sentry from '@sentry/browser'
 import { mapActions, mapGetters } from 'vuex'
 import Toolbar from '@@/nav/Toolbar'
 
@@ -64,7 +65,13 @@ export default {
     created () {
         this.setIsLoggedIn(this.$auth.isLoggedIn())
         if (this.isLoggedIn) {
-            this.setUser(this.$auth.getUser())
+            const user = this.$auth.getUser()
+
+            this.setUser(user)
+
+            Sentry.configureScope(function (scope) {
+                scope.setUser(user)
+            })
         }
         // else {
         //     this.redirectLogin()

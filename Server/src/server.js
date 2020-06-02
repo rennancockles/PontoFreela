@@ -1,7 +1,8 @@
+import 'dotenv/config'
 import { GraphQLServer } from 'graphql-yoga'
 import glue from 'schemaglue'
 import permissions from './Middlewares/permissions'
-import 'dotenv/config'
+import sentryMiddleware from './Middlewares/sentry'
 
 const { schema, resolver } = glue('src/GraphQL')
 
@@ -9,7 +10,7 @@ const server = new GraphQLServer({
     typeDefs: schema,
     resolvers: resolver,
     context: req => ({ ...req }),
-    middlewares: [permissions]
+    middlewares: [sentryMiddleware, permissions]
 })
 
 server.start({ playground: false }, ({ port }) => {
