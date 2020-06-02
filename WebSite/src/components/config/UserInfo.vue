@@ -3,28 +3,28 @@
         <v-card-text>
             <v-form v-model="frmValid">
                 <v-row wrap>
-                    <v-col xs="12" sm="6" md="3">
+                    <v-col cols="12" sm="6" md="3">
                         <v-text-field
                         label="Nome"
                         v-model="payload.name"
                         :rules="$rules.required"
                         ></v-text-field>
                     </v-col>
-                    <v-col xs="12" sm="6" md="3">
+                    <v-col cols="12" sm="6" md="3">
                         <v-text-field
                         label="Sobrenome"
                         v-model="payload.lastname"
                         :rules="$rules.required"
                         ></v-text-field>
                     </v-col>
-                    <v-col xs="12" sm="6" md="4">
+                    <v-col cols="12" sm="6" md="4">
                         <v-text-field
                         label="Email"
                         v-model="payload.email"
                         :rules="[...$rules.required, ...$rules.email]"
                         ></v-text-field>
                     </v-col>
-                    <v-col xs="12" sm="6" md="2">
+                    <v-col cols="12" sm="6" md="2">
                         <v-menu
                         ref="birthActivator"
                         v-model="birthActivator"
@@ -52,7 +52,7 @@
                             ></v-date-picker>
                         </v-menu>
                     </v-col>
-                    <v-col xs="12" sm="6" md="3">
+                    <v-col cols="12" sm="6" md="3">
                         <v-text-field
                         label="Empresa"
                         v-model="payload.company"

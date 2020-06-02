@@ -16,7 +16,8 @@
             </v-btn>
         </template>
 
-        <v-list two-line>
+        <v-list>
+            <v-subheader class="hidden-sm-and-up" inset>{{ user.name }}</v-subheader>
             <v-list-item key="config" router :to="{ name: 'config.index' }">
                 <v-list-item-action><v-icon>mdi-cogs</v-icon></v-list-item-action>
                 <v-list-item-content><v-list-item-title><span>Configuração</span></v-list-item-title></v-list-item-content>

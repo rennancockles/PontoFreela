@@ -7,7 +7,7 @@
         <v-card-text>
             <v-form v-model="frmValid">
                 <v-row wrap>
-                    <v-col xs="12" sm="6" md="2">
+                    <v-col cols="12" sm="6" md="2">
                         <v-menu
                         ref="dateActivator"
                         v-model="dateActivator"
@@ -36,7 +36,7 @@
                         </v-menu>
                     </v-col>
 
-                    <v-col xs="12" sm="6" md="10">
+                    <v-col cols="12" sm="6" md="10">
                         <v-text-field
                         label="Observações"
                         v-model="payload.obs"

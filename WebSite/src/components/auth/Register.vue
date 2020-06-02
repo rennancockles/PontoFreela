@@ -9,21 +9,21 @@
                 <v-card-text>
                     <v-form v-model="frmValid">
                         <v-row wrap>
-                            <v-col xs="12" sm="6" md="4">
+                            <v-col cols="12" sm="6" md="4">
                                 <v-text-field
                                 label="Nome"
                                 v-model="payload.name"
                                 :rules="$rules.required"
                                 ></v-text-field>
                             </v-col>
-                            <v-col xs="12" sm="6" md="4">
+                            <v-col cols="12" sm="6" md="4">
                                 <v-text-field
                                 label="Sobrenome"
                                 v-model="payload.lastname"
                                 :rules="$rules.required"
                                 ></v-text-field>
                             </v-col>
-                            <v-col xs="12" sm="6" md="4">
+                            <v-col cols="12" sm="6" md="4">
                                 <v-menu
                                 ref="birthActivator"
                                 v-model="birthActivator"
@@ -51,20 +51,20 @@
                                     ></v-date-picker>
                                 </v-menu>
                             </v-col>
-                            <v-col xs="12" sm="6">
+                            <v-col cols="12" sm="6">
                                 <v-text-field
                                 label="Email"
                                 v-model="payload.email"
                                 :rules="[...$rules.required, ...$rules.email]"
                                 ></v-text-field>
                             </v-col>
-                            <v-col xs="12" sm="6">
+                            <v-col cols="12" sm="6">
                                 <v-text-field
                                 label="Nome da Empresa"
                                 v-model="payload.company"
                                 ></v-text-field>
                             </v-col>
-                            <v-col xs="12" sm="6">
+                            <v-col cols="12" sm="6">
                                 <v-text-field
                                 label="Senha"
                                 name="password"
@@ -75,7 +75,7 @@
                                 :rules="$rules.required"
                                 ></v-text-field>
                             </v-col>
-                            <v-col xs="12" sm="6">
+                            <v-col cols="12" sm="6">
                                 <v-text-field
                                 label="Confirmar Senha"
                                 name="passwordConfirm"

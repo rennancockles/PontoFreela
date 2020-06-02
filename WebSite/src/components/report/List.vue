@@ -2,7 +2,7 @@
     <div>
         <v-form @submit.prevent="getReports">
             <v-row>
-                <v-col cols="12" sm="6" md="2">
+                <v-col cols="4" md="2">
                     <v-menu
                     ref="dateFromActivator"
                     v-model="dateFromActivator"
@@ -31,7 +31,7 @@
                     </v-menu>
                 </v-col>
 
-                <v-col cols="12" sm="6" md="2">
+                <v-col cols="4" md="2">
                     <v-menu
                     ref="dateToActivator"
                     v-model="dateToActivator"
@@ -62,10 +62,10 @@
 
                 <v-spacer></v-spacer>
 
-                <v-col cols="12" sm="6" md="3">
+                <v-col cols="3">
                     <v-btn type="submit" class="btn-filter-form" color="primary" block>
-                        <v-icon left dark>mdi-magnify</v-icon>
-                        Pesquisar
+                        <v-icon :left="$vuetify.breakpoint.smAndUp" dark>mdi-magnify</v-icon>
+                        <span class="hidden-xs-only">Pesquisar</span>
                     </v-btn>
                 </v-col>
             </v-row>
