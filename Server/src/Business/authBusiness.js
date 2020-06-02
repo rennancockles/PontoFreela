@@ -4,7 +4,7 @@ import moment from 'moment'
 import accountBusiness from '../Business/accountBusiness'
 import userDAO from '../DAL/userDAO'
 import recoverEmail from '../Email/recover'
-import encryption from '../Encryption'
+import createEncryption from '../Encryption'
 
 function getJwtToken ({ id }) {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -19,11 +19,11 @@ function getRecoverToken (email) {
         createdAt: moment().unix(),
         validHours: 24
     }
-    return encryption.encrypt(JSON.stringify(obj))
+    return createEncryption().encrypt(JSON.stringify(obj))
 }
 
 function validateRecoverToken (token, userEmail) {
-    const decrypted = encryption.decrypt(token)
+    const decrypted = createEncryption().decrypt(token)
     const obj = JSON.parse(decrypted)
 
     const isValidEmail = obj.email === userEmail

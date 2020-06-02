@@ -3,12 +3,19 @@
   "version": "0.1.0",
   "description": "Ponto Freela Server",
   "main": "src/server.js",
+  "jest": {
+    "transform": {
+      ".(js|jsx|ts|tsx)": "@sucrase/jest-plugin"
+    }
+  },
   "scripts": {
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js --ignore __tests__",
+    "test": "jest"
   },
   "author": "Rennan Cockles",
   "license": "ISC",
   "dependencies": {
+    "@sentry/node": "^5.16.0",
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "excel4node": "^1.7.2",
@@ -21,6 +28,7 @@
     "schemaglue": "^4.0.4"
   },
   "devDependencies": {
+    "@sucrase/jest-plugin": "^2.0.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-config-standard": "^14.1.0",
@@ -29,6 +37,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "jest": "^26.0.1",
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
     "sucrase": "^3.12.1"
