@@ -1,5 +1,4 @@
 import xl from 'excel4node'
-import moment from 'moment'
 
 let wb
 let ws

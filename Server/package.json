@@ -3,11 +3,6 @@
   "version": "0.1.0",
   "description": "Ponto Freela Server",
   "main": "src/server.js",
-  "jest": {
-    "transform": {
-      ".(js|jsx|ts|tsx)": "@sucrase/jest-plugin"
-    }
-  },
   "scripts": {
     "dev": "nodemon src/server.js --ignore __tests__",
     "test": "jest"
