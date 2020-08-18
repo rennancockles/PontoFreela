@@ -141,7 +141,7 @@ export default {
     computed: {
         ...mapGetters(['activeAccount']),
         headers () {
-            if (this.reports.length === 0) return []
+            if (!this.reports || this.reports.length === 0) return []
 
             const headers = [{ text: '', value: 'closing', sortable: false }, { text: 'Data', value: 'dateFormatted' }]
             let maxRecordLength = Math.max(...this.reports.map(r => r.records.length))
@@ -167,7 +167,7 @@ export default {
             return this.$options.filters.toBRDate(this.filter.dateTo)
         },
         allReportsClosed () {
-            return this.reports.filter(rep => !rep.closingId).length === 0
+            return this.reports ? this.reports.filter(rep => !rep.closingId).length === 0 : true
         }
     },
     async created () {
