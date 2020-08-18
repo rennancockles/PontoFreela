@@ -15,6 +15,9 @@ export default {
         closingInput.totalTime = msToStringHour(closingInput.totalMs)
         closingInput.totalValue = closingInput.totalMs * account.hourlyRate / 36e5
 
+        closingInput.dateFrom = openedReports.reduce((prev, curr) => prev.date < curr.date ? prev : curr).date.toISOString().split('T')[0]
+        closingInput.dateTo = openedReports.reduce((prev, curr) => prev.date > curr.date ? prev : curr).date.toISOString().split('T')[0]
+
         const closingId = await closingDAO.create(closingInput)
         closingDAO.apply(closingInput, closingId)
         
