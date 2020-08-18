@@ -1,9 +1,9 @@
 import crypto from 'crypto'
 
-function createEncryption (config = {}) {
-    const algorithm = config.algorithm || process.env.AES_ALG
-    const key = config.key || process.env.AES_KEY
-    const iv = config.iv || process.env.AES_IV
+function createEncryption () {
+    const algorithm = process.env.AES_ALG
+    const key = process.env.AES_KEY
+    const iv = process.env.AES_IV
     
     function encrypt (text) {
         if (!text) return ''
