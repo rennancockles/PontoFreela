@@ -16,6 +16,21 @@
         <v-divider></v-divider>
 
         <v-list-item class="default">
+            <v-list-item-avatar color="warning">
+                <v-icon x-large dark>mdi-timelapse</v-icon>
+            </v-list-item-avatar>
+            <v-list-item-content>
+                <v-list-item-title>
+                    <span class="warning--text title">{{ avgTime }}</span>
+                    <br>
+                    <span class="caption">Tempo médio</span>
+                </v-list-item-title>
+            </v-list-item-content>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
+        <v-list-item class="default">
             <v-list-item-avatar color="info">
                 <v-icon x-large dark>mdi-currency-usd</v-icon>
             </v-list-item-avatar>
@@ -36,7 +51,7 @@ import { mapGetters } from 'vuex'
 export default {
     name: 'DrawerSummary',
     computed: {
-        ...mapGetters(['time', 'money'])
+        ...mapGetters(['time', 'money', 'avgTime'])
     }
 }
 </script>

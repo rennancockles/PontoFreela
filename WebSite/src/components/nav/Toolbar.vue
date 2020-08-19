@@ -3,8 +3,15 @@
         <Drawer :show="showDrawer" @change="onChangeShowDrawer"></Drawer>
 
         <v-system-bar color="secondary" dark app v-if="$vuetify.breakpoint.smAndDown">
-            <v-icon>mdi-clock-outline</v-icon>
-            <span>{{ time }}</span>
+            <div id="time">
+                <v-icon>mdi-clock-outline</v-icon>
+                <span>{{ time }}</span>
+
+                <span class="mx-2">|</span>
+
+                <v-icon>mdi-timelapse</v-icon>
+                <span>{{ avgTime }}</span>
+            </div>
 
             <v-spacer></v-spacer>
 
@@ -51,7 +58,7 @@ export default {
         UserMenu
     },
     computed: {
-        ...mapGetters(['time', 'money', 'activeAccount']),
+        ...mapGetters(['time', 'money', 'avgTime', 'activeAccount']),
         appTitle () {
             return `${process.env.VUE_APP_TITLE} ${process.env.VUE_APP_ENV_TITLE}`
         }

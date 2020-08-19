@@ -44,6 +44,16 @@ const getters = {
 
         return msToStringHour(totalWorkedMs)
     },
+    avgTime (_, _getters) {
+        const activeAccount = _getters.activeAccount
+        let avgWorkedMs = 0
+
+        if (activeAccount.reports && activeAccount.reports.length > 0) {
+            avgWorkedMs = getTotalWorkedMs(activeAccount.reports) / activeAccount.reports.length
+        }
+
+        return msToStringHour(avgWorkedMs)
+    },
     money (_, _getters) {
         const activeAccount = _getters.activeAccount
         const hourlyRate = parseFloat(activeAccount.hourlyRate || '0')
