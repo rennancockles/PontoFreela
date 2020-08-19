@@ -49,7 +49,8 @@ const getters = {
         let avgWorkedMs = 0
 
         if (activeAccount.reports && activeAccount.reports.length > 0) {
-            avgWorkedMs = getTotalWorkedMs(activeAccount.reports) / activeAccount.reports.length
+            const openReportsLength = activeAccount.reports.filter(rep => !rep.closingId).length
+            avgWorkedMs = getTotalWorkedMs(activeAccount.reports) / openReportsLength
         }
 
         return msToStringHour(avgWorkedMs)
