@@ -10,7 +10,8 @@ export default {
                 let query = mysql.format(`SELECT c.*, 
                 DATE_FORMAT(fromDate, "%d/%m/%Y") fromDateFormatted, 
                 DATE_FORMAT(toDate, "%d/%m/%Y") toDateFormatted,
-                DATE_FORMAT(createdAt, "%d/%m/%Y") createdAtFormatted  
+                DATE_FORMAT(createdAt, "%d/%m/%Y") createdAtFormatted,  
+                DATE_FORMAT(paymentDate, "%d/%m/%Y") paymentDateFormatted  
                 FROM closings c
                 INNER JOIN accounts a ON a.id = c.accountId
                 WHERE userId = ? AND accountId = ?
@@ -138,8 +139,10 @@ export default {
             pool.getConnection((err, connection) => {
                 if (err) throw err;
 
-                const query = mysql.format('UPDATE closings SET isPaid = ? WHERE id = ? AND accountId = ?;', 
-                    [paidStatus, closingId, accountId])
+                const paymentDate = paidStatus ? new Date() : null 
+
+                const query = mysql.format('UPDATE closings SET isPaid = ?, paymentDate = ? WHERE id = ? AND accountId = ?;', 
+                    [paidStatus, paymentDate, closingId, accountId])
 
                 connection.query(query, (err, result) => {
                     if (err) throw err

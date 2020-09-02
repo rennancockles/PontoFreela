@@ -17,6 +17,8 @@ export default {
                         totalTime
                         totalValue
                         isPaid
+                        paymentDate
+                        paymentDateFormatted
                     }
                 }
             `,
@@ -42,6 +44,8 @@ export default {
                         totalTime
                         totalValue
                         isPaid
+                        paymentDate
+                        paymentDateFormatted
                     }
                 }
             `,
@@ -98,6 +102,8 @@ export default {
                         totalTime
                         totalValue
                         isPaid
+                        paymentDate
+                        paymentDateFormatted
                     }
                 }
             `,

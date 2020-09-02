@@ -20,6 +20,8 @@ type Closing {
     totalTime: String
     totalValue: Float
     isPaid: Boolean
+    paymentDate: Date
+    paymentDateFormatted: String
 }
 
 input ClosingInput {

@@ -1,5 +1,5 @@
 <template>
-    <v-card flat>
+    <v-card id="closings" flat>
         <v-card-title class="primary white--text title">
             FECHAMENTOS
         </v-card-title>
@@ -21,6 +21,7 @@
                 <template v-slot:item.isPaid="{ item }">
                     <v-checkbox
                     v-model="item.isPaid"
+                    :label="item.paymentDateFormatted"
                     @click.stop="checkboxChange(item)"
                     ></v-checkbox>
                 </template>
@@ -158,3 +159,10 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+#closings label.v-label {
+    font-size: .875rem !important;
+    color: rgba(0,0,0,.87) !important;
+}
+</style>
