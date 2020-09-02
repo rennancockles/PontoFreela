@@ -19,6 +19,7 @@ export default {
         deleteReport: authRequired,
         createClosing: authRequired,
         deleteClosing: authRequired,
-        changePaidStatus: authRequired
+        changePaidStatus: authRequired,
+        uploadNfe: authRequired
     }
 }

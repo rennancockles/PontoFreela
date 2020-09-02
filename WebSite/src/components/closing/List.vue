@@ -32,18 +32,31 @@
                     <v-icon small color="primary" class="ml-1" @click="onDownloadReport(item)">
                         mdi-download
                     </v-icon>
+                    <v-icon small color="info" class="ml-1" @click="showUploadInvoice(item)">
+                        mdi-file-upload
+                    </v-icon>
                 </template>
             </v-data-table>
         </v-card-text>
+
+        <UploadInvoice
+        :show="uploadInvoice"
+        @uploadInvoice="onUploadInvoice"
+        @close="hideUploadInvoice"
+        ></UploadInvoice>
     </v-card>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import UploadInvoice from './UploadInvoice'
 import API from '@/api/closing'
 
 export default {
     name: 'ClosingList',
+    components: {
+        UploadInvoice
+    },
     data: () => ({
         closings: [],
         headers: [
@@ -54,7 +67,9 @@ export default {
             { text: 'Valor', value: 'totalValue', sortable: false },
             { text: 'Pago', value: 'isPaid', sortable: false },
             { text: 'Ações', value: 'actions', sortable: false }
-        ]
+        ],
+        itemToUploadInvoice: null,
+        uploadInvoice: false
     }),
     computed: {
         ...mapGetters(['activeAccount'])
@@ -113,6 +128,34 @@ export default {
                     } else {
                         this.downloadFile(base64)
                     }
+
+                    this.setLoading(false)
+                })
+                .catch(this.$throwException)
+        },
+        showUploadInvoice (item) {
+            this.itemToUploadInvoice = item
+            this.uploadInvoice = true
+        },
+        hideUploadInvoice () {
+            this.itemToUploadInvoice = null
+            this.uploadInvoice = false
+        },
+        onUploadInvoice (file) {
+            const item = this.itemToUploadInvoice
+            this.setLoading(true)
+            this.hideUploadInvoice()
+
+            API.uploadNfe(item.id, this.activeAccount.id, file)
+                .then(async ({ data }) => {
+                    // const errors = data.errors
+                    // const base64 = data.data.report
+
+                    // if (errors && errors.length > 0) {
+                    //     this.$throwException(errors[0])
+                    // } else {
+                    //     this.downloadFile(base64)
+                    // }
 
                     this.setLoading(false)
                 })

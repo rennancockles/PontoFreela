@@ -35,5 +35,13 @@ export default {
         await closingDAO.changePaidStatus(closingId, accountId, paidStatus)
         
         return closingDAO.list(accountId, userId)
+    },
+
+    uploadNfe: async (closingId, accountId, userId, filename, base64) => {
+        // await closingDAO.changePaidStatus(closingId, accountId, paidStatus)
+        console.log(filename)
+        console.log(base64)
+        
+        return closingDAO.list(accountId, userId)
     }
 }

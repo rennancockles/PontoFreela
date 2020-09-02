@@ -6,6 +6,7 @@ type Mutation {
     createClosing(closingInput: ClosingInput!): [Report]
     deleteClosing(closingId: ID!, accountId: ID!): [Closing]
     changePaidStatus(closingId: ID!, accountId: ID!, paidStatus: Boolean!): [Closing]
+    uploadNfe(closingId: ID!, accountId: ID!, filename: String!, base64: String!): [Closing]
 }
 
 type Closing {

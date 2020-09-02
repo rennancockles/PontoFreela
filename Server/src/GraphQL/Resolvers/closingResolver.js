@@ -8,6 +8,8 @@ export const resolver = {
         createClosing: (_, { closingInput }) => closingBusiness.create(closingInput),
         deleteClosing: (_, { closingId, accountId }, { userId }) => closingBusiness.delete(closingId, accountId, userId),
         changePaidStatus: (_, { closingId, accountId, paidStatus }, { userId }) => 
-            closingBusiness.changePaidStatus(closingId, accountId, userId, paidStatus)
+            closingBusiness.changePaidStatus(closingId, accountId, userId, paidStatus),
+        uploadNfe: (_, { closingId, accountId, filename, base64 }, { userId }) => 
+            closingBusiness.uploadNfe(closingId, accountId, userId, filename, base64)
     }
 }

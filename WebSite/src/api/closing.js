@@ -127,5 +127,35 @@ export default {
                 accountId
             }
         })
+    },
+
+    uploadNfe: (closingId, accountId, file) => {
+        return $http.post('', {
+            query: `
+                mutation ($closingId: ID!, $accountId: ID!, $filename: String!, $base64: String!) {
+                    closings: uploadNfe (closingId: $closingId, accountId: $accountId, filename: $filename, base64: $base64) {
+                        id
+                        fromDate
+                        fromDateFormatted
+                        toDate
+                        toDateFormatted
+                        createdAt
+                        createdAtFormatted
+                        totalMs
+                        totalTime
+                        totalValue
+                        isPaid
+                        paymentDate
+                        paymentDateFormatted
+                    }
+                }
+            `,
+            variables: {
+                closingId,
+                accountId,
+                filename: file.filename,
+                base64: file.base64
+            }
+        })
     }
 }
