@@ -5,19 +5,19 @@
         <template v-if="isLoggedIn && !isLogin">
             <toolbar></toolbar>
 
-            <v-content class="default">
+            <v-main class="default">
                 <v-container grid-list-xl>
                     <router-view></router-view>
                 </v-container>
-            </v-content>
+            </v-main>
         </template>
 
         <template v-else>
-            <v-content class="default">
+            <v-main class="default">
                 <v-container class="fill-height">
                     <router-view></router-view>
                 </v-container>
-            </v-content>
+            </v-main>
         </template>
 
         <v-footer app>
