@@ -1,5 +1,4 @@
 node_modules
-dist
 npm-debug.log
 
 .git
@@ -11,4 +10,3 @@ Dockerfile
 .editorconfig
 .prettierrc
 *.example
-README.md
