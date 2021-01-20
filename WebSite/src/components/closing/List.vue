@@ -141,7 +141,7 @@ export default {
         async checkboxChange (item) {
             this.setLoading(true)
 
-            await API.changePaidStatus(item.id, this.activeAccount.id, !item.isPaid)
+            await API.changePaidStatus(item.id, this.activeAccount.id, item.isPaid)
                 .then(async ({ data }) => {
                     const closingsResponse = data.data.closings
                     const errors = data.errors
