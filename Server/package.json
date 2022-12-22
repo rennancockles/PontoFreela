@@ -16,7 +16,7 @@
     "excel4node": "^1.7.2",
     "graphql-middleware-sentry": "^3.2.1",
     "graphql-yoga": "^1.18.3",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "moment": "^2.24.0",
     "mysql": "^2.18.1",
     "nodemailer": "^6.4.6",
